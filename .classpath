@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="BABQ_3RD_PARTY/h2.jar"/>
+	<classpathentry kind="var" path="BABQ_3RD_PARTY/mysql-connector-java-bin.jar"/>
+	<classpathentry kind="var" path="BABQ_3RD_PARTY/poi-3.0.2-FINAL-20080204.jar"/>
+	<classpathentry kind="var" path="BABQ_3RD_PARTY/poi-contrib-3.0.2-FINAL-20080204.jar"/>
+	<classpathentry kind="var" path="BABQ_3RD_PARTY/poi-scratchpad-3.0.2-FINAL-20080204.jar"/>
+	<classpathentry kind="var" path="BABQ_3RD_PARTY/swing-worker-1.1.jar"/>
+	<classpathentry kind="var" path="BABQ_3RD_PARTY"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

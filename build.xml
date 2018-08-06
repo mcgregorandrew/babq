@@ -1,0 +1,75 @@
+<project name="BABQ" default="dist" basedir=".">
+
+    <description>
+        BABQ Build Script
+    </description>
+
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+  <property name="build.compiler" value="javac1.5"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+  	<copy file="${src}/resources/ageSummary.xls" tofile="${build}/resources/ageSummary.xls"/>
+  	<copy file="${src}/resources/billingSummary.xls" tofile="${build}/resources/billingSummary.xls"/>
+    <copy file="${src}/resources/qcBillingTemplate.xls" tofile="${build}/resources/qcBillingTemplate.xls"/>
+    <copy file="${src}/resources/roleSummary.xls" tofile="${build}/resources/roleSummary.xls"/>
+    <copy file="${src}/resources/teamSummary.xls" tofile="${build}/resources/teamSummary.xls"/>
+    <copy file="${src}/resources/providerSummary.xls" tofile="${build}/resources/providerSummary.xls"/>
+    <copy file="${src}/resources/Money.png" tofile="${build}/resources/Money.png"/>
+    <javac srcdir="${src}" destdir="${build}" debug="true">
+    <classpath>
+      <pathelement location="3rdParty/h2.jar"/>
+      <pathelement location="3rdParty/mysql-connector-java-bin.jar"/>
+      <pathelement location="3rdParty/poi-3.0.2-FINAL-20080204.jar"/>
+      <pathelement location="3rdParty/poi-contrib-3.0.2-FINAL-20080204.jar"/>
+      <pathelement location="3rdParty/poi-scratchpad-3.0.2-FINAL-20080204.jar"/>
+      <pathelement location="3rdParty/swing-worker-1.1.jar"/>
+    </classpath>
+    </javac>
+
+  </target>
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+    <mkdir dir="${dist}/bin"/>
+
+
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <unjar src="3rdParty/h2.jar" dest="${build}"/>
+    <unjar src="3rdParty/mysql-connector-java-bin.jar" dest="${build}"/>
+    <unjar src="3rdParty/poi-3.0.2-FINAL-20080204.jar" dest="${build}"/>
+    <unjar src="3rdParty/poi-contrib-3.0.2-FINAL-20080204.jar" dest="${build}"/>
+    <unjar src="3rdParty/poi-scratchpad-3.0.2-FINAL-20080204.jar" dest="${build}"/>
+    <unjar src="3rdParty/swing-worker-1.1.jar" dest="${build}"/>
+    <jar jarfile="${dist}/lib/babq.jar" basedir="${build}"/>
+
+    <exec osfamily="windows" executable="c:\Program Files (x86)\JSmooth 0.9.9-7\jsmoothcmd.exe">
+      <arg value="babq.jsmooth"/>
+    </exec>
+    <zip destfile="${dist}/BABQ.zip" basedir="${dist}/bin"/>
+    <exec osfamily="windows" executable="c:\Program Files (x86)\JSmooth 0.9.9-7\jsmoothcmd.exe">
+      <arg value="babq-d.jsmooth"/>
+    </exec>
+    <zip destfile="${dist}/BABQ-d.zip" basedir="${dist}/bin"/>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
