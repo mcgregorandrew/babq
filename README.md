@@ -1,8 +1,8 @@
 # babq
-Bruyere Academic Health Team Billing for Quebec Patients
+Billing Application for Quebec Patients
 
 This is a tool used periodically to generate billing spreadsheets for
-the Bruyere Academic Family Health Team.  It consumes output from the
+the Quebec Ministry of Health.  It consumes output from a
 NetMedical EMR system in the form of Patient and Appointement records
 and then outputs one of the following:
 
