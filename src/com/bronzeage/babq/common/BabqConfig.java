@@ -250,7 +250,7 @@ public class BabqConfig {
 
 	public static URI getHelpUri() {
 		try {
-			return new URI("http://bronzeagesoftware.com/babq/");
+			return new URI("https://github.com/mcgregorandrew/babq/wiki");
 		} catch (URISyntaxException e) {
 			return null;
 		}
