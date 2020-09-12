@@ -1,0 +1,617 @@
+Provider number,Surname,First Name,OHIP number,Team,Role,Location,mDocNum,Old Team
+1,Ng,Alan,15439,Ng,Physician,P,1,Ng
+2,Martin,Carmel,16821,Martin,Physician,B,2,Martin
+3,Bernstein,Robert,206540,Bernstein,Physician,B,3,Bernstein
+4,Shearman,John,149450,Shearman,Physician,B,80,Shearman
+5,Hollingworth,Gary,177253,Hollingworth,Physician,B,5,Hollingworth
+6,Czarnowski,Charles,117408,Czarnowski,Physician,B,6,Czarnowski
+7,Pottie,Kevin,99945,Pottie,Physician,B,7,Pottie
+8,Kilbertus,Frances,279281,Kilbertus,Physician,B,8,Kilbertus
+9,Caron,Catherine,89680,Caron,Physician,B,9,Caron
+10,Elmslie,Tom,252130,Elmslie,Physician,B,10,Elmslie
+11,Boucher,Francois,258715,Boucher,Physician,B,11,Boucher
+13,TLC 2,,,TLC,TLC,P,,TLC
+17,Anand,Pamela,,Ponka,Resident,B,,Ponka
+18,Crabtree,Paul,10102,Crabtree,Physician,P,12,Crabtree
+19,Mavriplis,Cleo,30130,Mavriplis,Physician,P,13,Mavriplis
+20,Turley,Jolanda,13253,Turley,Physician,P,14,Turley
+21,Johnston,Sharon,19587,Johnston,Physician,P,15,Johnston
+22,Ballou,Steve,16340,Ballou,Physician,B,16,Ballou
+26,Young,Deirdre,18412,Young,Physician,B,26,Young
+65,Petitclerc,Danielle,,Blue,RN,B,,Blue
+515,Jonasson,Natalie,,Allied Health,Pharmacist,N,,AH Both
+516,Harrison,Susan,,Allied Health,Social Worker,P,,AH Primrose
+517,Stone,Erin,22340,Stone,Physician,B,,Stone
+518,Creaser,Kim,,Mavriplis,Resident,P,,Mavriplis
+519,Trail,Carla,,Ng,Resident,P,,Ng
+520,Wozniak,Miranda,,Ng,Resident,P,,Ng
+521,Strike,Jessica,22297,Strike,Physician,P,,Strike
+522,Callahan,Justine,,Turley,Resident,P,,Turley
+523,Rangwala,Sohil,22298,Rangwala,Physician,P,60,Rangwala
+524,Bouchard,Manon,723149,Primrose,NP,P,75,Primrose
+525,Ciachanska,Ewa,,Primrose,Resident,P,,Primrose
+526,Gregoire,Genevieve,,Diabetes,Diabetes,N,,AH Both
+527,Fake resident,,,AH Bruyere,Resident,N,,AH Bruyere
+528,Eason,Bradley,,Ehrlich,Resident,B,,Ehrlich
+529,Abbud,Saad,,Caron,Resident,B,,Caron
+530,Aklilu,Fasika,,Bernstein,Resident,B,,Bernstein
+531,Al Hadi,Mouafak,,Czarnowski,Resident,B,,Czarnowski
+532,Bailey,Jason,21361,Czarnowski,Resident,B,,Czarnowski
+533,Bhagirath,Vikas,,Shearman,Resident,B,,Shearman
+534,Bosiljcic-Stojanovic,Svetlana,,Shearman,Resident,B,,Shearman
+535,Chow,Laura,21038,Kilbertus,Resident,B,,Kilbertus
+536,Cronin,Christopher,21376,Kilbertus,Resident,B,,Kilbertus
+537,De La Torre,Josephine,,Ponka,Resident,B,,Ponka
+538,Fundamenski,Martha,21274,Czarnowski,Resident,B,,Czarnowski
+539,Huq,Rokaiya,,Ponka,Resident,B,,Ponka
+540,Jetty,Mandip,,Kilbertus,Resident,B,,Kilbertus
+541,Platzker,Daniel,,Linder,Resident,B,,Linder
+542,Holt,Martha,23190,Holt,Physician,B,,Holt
+543,Kundi,Anjali,,Ballou,Resident,B,,Ballou
+544,Lariviere,Katherine,22282,Lariviere,Physician,B,,Lariviere
+545,Malaviarachchi ,Krishangi,,Ponka,Resident,B,,Ponka
+546,Matin,Troozbeh,,Linder,Resident,B,,Linder
+547,Meunier,Helene,,Young,Resident,B,,Young
+549,Rosenberg,Hans,,Kilbertus,Resident,B,,Kilbertus
+550,Sadiq,Najemus,,Primrose,Resident,P,,Primrose
+551,Schurter,Matthew,,Shearman,Resident,B,,Shearman
+552,Seid,Cherinet,,Ballou,Resident,B,,Ballou
+553,Bo Song,Helen,,Shearman,Resident,B,,Shearman
+554,Spencer,Lesley,,Hollingworth,Resident,B,,Hollingworth
+555,Stevens,Lissa,,Young,Resident,B,,Young
+556,Szczepanik,Dorota,,Czarnowski,Resident,B,,Czarnowski
+557,Aldridge,Lisa,19677,Aldridge,Physician,B,,Aldridge
+558,Jackson-Hughes,Jennie,21116,Jackson-Hughes,Physician,B,,Jackson-Hughes
+559,MSK,Clinic,,Bruyere,MSK,B,,Bruyere
+560,Child Psychiatry,,,Specialist,Child Psychiatry,B,,Child Psychiatry
+561,Johnson,Luella,,Primrose,Resident,P,,Primrose
+562,Evening clinic,,,Evening,Evening,N,,Evening
+563,Charron,Serge,,Primrose,RN,P,,Primrose
+564,Allard,Iris,,Primrose,RN,P,,Primrose
+565,Takacs,Jennifer,,Crabtree,Resident,P,,Crabtree
+566,O'Donnell,Trishia,,Czarnowski,Resident,B,,Czarnowski
+567,Janakiram,Prassedha,,Caron,Resident,B,,Caron
+568,Muller,Florian,,caron,Resident,B,,caron
+569,Bruyere Surgi-clinic,,,Bruyere,Surgical clinic,B,,Bruyere
+570,Womens health,Clinic,,Bruyere,Womens Health,B,,Bruyere
+571,Topp,Patricia,722911,Bruyere,NP,B,78,AH Bruyere
+572,Roussel,Antoine,,Allied Health,Social Worker,B,,AH Bruyere
+573,Tadic,Vela,,Allied Health,Social Worker,B,,AH Bruyere
+574,Chestnut,Heidi,,Primrose,Physician,P,27,Primrose
+575,Ponka,David,13756,Ponka,Physician,B,,Ponka
+576,Primrose Surgi clinic,,,Primrose,Surgical clinic,P,,Primrose
+577,Smith,Joe,,Primrose,Resident,P,,Primrose
+578,Halil,Roland,,Allied Health,Pharmacist,N,,AH Both
+579,Busing,Nick,174912,Busing,Physician,P,28,Busing
+580,TLC,,,Primrose,TLC,P,,Primrose
+581,Ponka,David,13756,Ponka,Physician,B,17,Ponka
+582,German,Gregory,,Ng,Resident,P,,Ng
+583,Linder,Mark,19758,Blue,Locum,B,23,Blue
+584,Mathias,Michelle,,McLaren,Resident,P,,McLaren
+585,Dufour,Mathieu,,Turley,Resident,P,,Turley
+586,Wang,Bing,,McLaren,Resident,P,,McLaren
+587,Glenn,John,,Crabtree,Resident,P,,Crabtree
+588,Soriol,Mary,,Turley,Resident,P,,Turley
+589,Fox,Eric,,Ng,Resident,P,,Ng
+590,Gil,Lucas,,Ng,Resident,P,,Ng
+591,Ghoche,Roger,,Mavriplis,Resident,P,,Mavriplis
+592,Addleman-Frankel,Sarah,,Mavriplis,Resident,P,,Mavriplis
+593,Sacevich,Nathan,,McLaren,Resident,P,,McLaren
+594,Talballa,Hala,,McLaren,Resident,P,,McLaren
+595,Shilhan,Caroline,21939,Ng,Resident,P,,Ng
+596,Spooner,Marcia,,caron,Resident,B,,caron
+597,Thompson,Brigit,,Ponka,Resident,B,,Ponka
+598,Richard,Megan,23529,Richard,Physician,B,,Richard
+599,Giroux,Sylvie,,Red,RN,B,,Red
+600,Chaudry,Bushra,,Czarnowski,Resident,B,,Czarnowski
+601,Jacula,Laura,,Ehrlich,Resident,B,,Ehrlich
+602,Saville,Leyana,,Young,Resident,B,,Young
+603,Laughton,Angela,23438,Laughton,Physician,B,,Laughton
+604,Asrat,Getnet,,Ehrlich,Resident,B,,Ehrlich
+605,MacMillan,Meeka,,caron,Resident,B,,caron
+606,Brault,Jennifer,,Crabtree,Resident,P,,Crabtree
+607,Mossman,Robin,,Kilbertus,Resident,B,,Kilbertus
+608,Cabral,Lauda,,CCAC,CCAC,B,,CCAC
+609,Klett,Marie-Josee,,Klett,Physician,B,,Klett
+610,Jilkina,Tatiana,,Kilbertus,Resident,B,,Kilbertus
+611,Langenbahn,Clementine,,Primrose,RN,P,,Primrose
+612,McLaren,Meaghan,19201,McLaren,Physician,P,29,McLaren
+613,Diabetes,,,Diabetes,Diabetes,B,,Diabetes
+614,Horri,Mehdi,,plante,Resident,B,,plante
+615,Primrose,Shared Mental Health,,Shared Mental Health,Shared mental health,P,,AH Both
+616,Cormier,Denise,,Allied Health,Dietitian,N,,AH Both
+617,Primrose Guest Doctor,,,Other,Physician,P,,Other
+618,Scalabrini,Alain,724328,Bruyere,NP,B,76,AH Bruyere
+619,Thottungal,James,,Czarnowski,Resident,B,,Czarnowski
+620,Desjardins,Lucie,,Team 7,RN,B,,Team 7
+621,Red,RN,,Red,RN,B,,Red
+622,Adeland,Shauna,,Allied Health,Social Worker,B,,AH Bruyere
+623,Hampel,Claudia,,Shared Mental Health,Shared mental health,N,,AH Both
+624,Hampel,Claudia,,Shared Mental Health,Shared mental health,N,,AH Both
+625,Dempsey,Mimi,,Red,RN,B,,Red
+627,Swenson,Robert,,Shared Mental Health,Shared mental health,N,,AH Both
+628,Klink,Donna,,Shared Mental Health,Shared mental health,N,,AH Both
+629,Verret,Marie-Eve,,Social Worker,Social Work Student,B,,AH Bruyere
+630,Power,Rhonda,,Primrose,RN,P,,Primrose
+631,Ehrlich,Helga,60038,Ehrlich,Physician,B,40,Ehrlich
+632,Well baby clinic,,,Well baby clinic,Well baby clinic,N,,Well baby clinic
+633,Singer,Anna,,Allied Health,Kinesiologist,P,,AH Primrose
+634,Heughan,Caroline,,Team 5,Resident,B,,Team 5
+636,Jimoh,Olubukola,,Crabtree,Resident,P,,Crabtree
+637,Nowodworski,Dorota,,Crabtree,Resident,P,,Crabtree
+638,Smith,Erin,,Young,Resident,B,,Young
+639,Barnes,Christopher,,Ramachandran,Resident,B,,Ramachandran
+640,Seneviratne Attapattu,Yasanthie,,Ballou,Resident,B,,Ballou
+641,Braidwood,Danielle,,Ballou,Resident,B,82,Ballou
+642,Brooks-Legault,Genevieve,,Ramachandran,Resident,B,,Ramachandran
+643,Bonacci,Giovanni,,Kilbertus,Resident,B,,Kilbertus
+644,Ty,Danie,,Kilbertus,Resident,B,,Kilbertus
+645,Turko,Ekaterina,,Young,Resident,B,,Young
+646,Wong,Tracy,,Ehrlich,Resident,B,,Ehrlich
+647,Degani,Aqeel,,Ponka,Resident,B,,Ponka
+648,Samrai,Gurinder,,Ponka,Resident,B,,Ponka
+649,Courchesne,Mathieu,,Turley,Resident,P,,Turley
+650,Thomassin,Marie-Claire,,Turley,Resident,P,,Turley
+651,Zhuang,Lihua,,Ng,Resident,P,,Ng
+652,Saliba,Cynthia,,McLaren,Resident,P,,McLaren
+653,Nguyen,Quynh-Lang,,Mavriplis,Resident,P,,Mavriplis
+654,Krishnamoorthy,Sumitha,17696,Krishnamoorthy,Physician,B,22,Krishnamoorthy
+655,Ozard,Jennifer,,McLaren,Resident,P,,McLaren
+656,Kerr,Jonathan,,Czarnowski,Resident,B,,Czarnowski
+657,Saunders,Christine,,Czarnowski,Resident,B,,Czarnowski
+658,Pinto,Artur,,Kilbertus,Resident,B,,Kilbertus
+659,T3RN,,,Red,RN,B,,Red
+660,Hickey,Betty,,Blue,RN,B,,Blue
+661,Gauvreau,Isabelle,,Red,RN,B,,Red
+662,Lalonde,Julie,,Red,RN,B,,Red
+663,Blue,RN,,Blue,RN,B,,Blue
+665,T5RN,,,Blue,RN,B,,Blue
+666,MSK,,,Primrose,MSK,P,,Primrose
+667,Beach,Renee,,caron,Resident,B,,caron
+668,Salter,Nadia,,CCAC,CCAC,N,,AH Both
+669,Brewer,John,22390,Brewer,Physician,B,,Brewer
+670,Cooper,Pamela,,Shared Mental Health,Shared mental health,N,,AH Both
+671,Bruyere Flushot,Clinic,,RN,RN,B,,RN
+672,Jacques,Sylvie,,Diabetes,Diabetes Dietitian,N,,Diabetes
+673,Lalonde,Jeanette,,Diabetes,Diabetes RN,N,,Diabetes
+674,Becker,Jennifer,,Team 4,Resident,B,,Team 4
+675,Shimizu,Tawnya,724385,Primrose,NP,P,77,Primrose
+676,Farrell,Barbara,,Allied Health,Pharmacist,B,,AH Both
+677,Layman-Pleet,Leah,,Crabtree,Resident,P,,Crabtree
+678,Miula,Elena,,Crabtree,Resident,P,,Crabtree
+679,Champagne,Marilyn,,Caron,Resident,B,,Caron
+681,Barnes,Lori,,Allied Health,Footcare,B,,AH Bruyere
+682,Lawrence,Kim,,Allied Health,AH Primrose,P,,AH Primrose
+683,Well baby clinic,,,Well baby Primrose,Well baby clinic,P,,Well baby Primrose
+684,Fratesi,Lauren,,Kilbertus,Resident,B,,Kilbertus
+685,Mayberry,Patricia,,Allied Health,Social Worker,B,,AH Bruyere
+686,Nadine,Doris,,Caron,Resident,B,,Caron
+687,Moreau,Natalie,,Caron,Resident,B,,Caron
+688,Kozminski,Therese,,Caron,Resident,B,,Caron
+689,Purdy,Ceilidh Levi,,Kilbertus,Resident,B,,Kilbertus
+690,Patasi,Beata,,Kilbertus,Resident,B,,Kilbertus
+691,Pandompatam,Meera,,Czarnowski,Resident,B,,Czarnowski
+692,Hanna,Albert,,Czarnowski,Resident,B,,Czarnowski
+693,Murray,Carolyn,,Young,Resident,B,,Young
+694,Brodeur,Jennifer,,Young,Resident,B,,Young
+695,Baddar,Faisal,,Czarnowski,Resident,B,,Czarnowski
+696,Aggarwal,Rohit,,Ehrlich,Resident,B,,Ehrlich
+697,Amer,Amal,,Ehrlich,Resident,B,,Ehrlich
+698,Campbell,Gregory,,Ballou,Resident,B,,Ballou
+699,Ibrahim,Jawahir,,Stone,Resident,B,,Stone
+700,Kucherepa,Nadia,,Ramachandran,Resident,B,,Ramachandran
+701,Hostland,Sara,,Ponka,Resident,B,,Ponka
+702,Khan,Anees,,Ponka,Resident,B,,Ponka
+703,Magar,Janice,,Shared Mental Health,Shared mental health,N,,AH Both
+704,Chin,Ami,,Crabtree,Resident,P,,Crabtree
+705,Parray,Baynazir,,Turley,Resident,P,,Turley
+706,Cantor,Elliott,,Mavriplis,Resident,P,,Mavriplis
+707,Goindi,Reena,,Mavriplis,Resident,P,,Mavriplis
+708,Hamilton,Danielle,,Ng,Resident,P,,Ng
+709,Tremblay,Joey,,Ng,Resident,P,,Ng
+710,Aucoin,Christine,,Ehrlich,Resident,B,,Ehrlich
+711,Lilly,Erica,,McLaren,Resident,P,,McLaren
+712,Ramaliu,Anila,,Ballou,Resident,B,,Ballou
+713,Dempsey,Mimi,,Red,RN,B,,Red
+714,Medical,Student,,Primrose,Student,P,,Primrose
+716,Khadilkar,Amole,,Ng,Resident,P,,Ng
+717,Diabetes,Primrose,,Diabetes,Diabetes,P,,Diabetes
+718,Green,Doug,,Shared Mental Health,Shared mental health,N,,AH both
+719,FootCare,Clinic,,Allied Health,Footcare,B,,AH Bruyere
+720,Malek,Mira,,Caron,Resident,B,,Caron
+721,Macleod,Olivia,,Kilbertus,Resident,B,,Kilbertus
+722,Gruner,Douglas,10178,Gruner,Physician,B,55,Gruner
+723,Fung,Sarah,,Boucher,Resident,B,,Boucher
+724,Sarbu,Claudia,,Ballou,Resident,B,,Ballou
+725,Chun,Soojin,,Czarnowski,Resident,B,,Czarnowski
+726,Cyr,Gabrielle,,Kilbertus,Resident,B,,Kilbertus
+727,Swenson,Robert,,Shared Mental Health,Shared mental health,N,,AH Both
+729,Team 7,RN,,Blue,RN,B,,Blue
+730,QiiP,,,Diabetes,Diabetes,B,,Diabetes
+731,Bismil,Supuneet,,Mavriplis,Resident,P,,Mavriplis
+733,Nili,Kaplan-Myrth,,Blue,Resident,B,,Blue
+734,Reza,Erona,,Crabtree,Resident,P,,Crabtree
+735,Truong,Long,,Crabtree,Resident,P,,Crabtree
+736,Dell,Rosemary,,McLaren,Resident,P,,McLaren
+737,Jason,Lorette,,McLaren,Resident,P,,McLaren
+738,Nowak,Abigail,,Turley,Resident,P,,Turley
+739,Cheryl,Corkum,,Turley,Resident,P,,Turley
+745,Evans Olders,Rebecca,,Stone,Resident,B,,Stone
+746,Zahra,Saleh,,Caron,Resident,B,,Caron
+748,Mehta,Darshana,,Caron,Resident,B,,Caron
+749,Clouthier,Sarah,,Kilbertus,Resident,B,,Kilbertus
+750,Marta,Karczewska,,Stone,Resident,B,,Stone
+751,Averill,Owen,,Mercer,Resident,B,,Mercer
+752,Brown-Shreves,Danielle,,Ponka,Resident,B,,Ponka
+753,Dewan,Ambika,,Ballou,Resident,B,,Ballou
+754,Manhas,Inderdeep,,Kilbertus,Resident,B,,Kilbertus
+755,Mercer,Jay,10309,Mercer,Physician,B,70,Mercer
+756,Stephenson,Michael,,Hollingworth,Resident,B,,Hollingworth
+757,Locum(GH and FMF),,,Summer,Physician,B,,Summer
+758,Nahirny,Taras,,Mavriplis,Resident,P,,Mavriplis
+759,Ahmed,Wajid,,Czarnowski,Resident,B,,Czarnowski
+760,Wu,Yan,,Turley,Resident,P,,Turley
+761,Afridi,Sajida,,Caron,Resident,B,,Caron
+762,Woods,Kellye,,Allied Health,Social Worker,B,,AH Bruyere
+763,Ellis,Chelsey,,Ponka,Resident,B,,Ponka
+764,Muggah,Elizabeth,15387,Muggah,Physician,B,81,Muggah
+765,Gregoire,Genevieve,,Diabetes,Diabetes,N,,AH Both
+766,Roy,Anita,,Kilbertus,Resident,B,,Kilbertus
+767,Bradley-Laforge,Nichelle,,Allied Health,Social Worker,P,,AH Primrose
+768,Mikhail,Eric,,Caron,Resident,B,,Caron
+769,Campbell,Sarah,,Mavriplis,Resident,P,,Mavriplis
+770,Del Bel Belluz,Zoe,,Crabtree,Resident,P,,Crabtree
+771,Gruszczynski,Adam,,Turley,Resident,P,,Turley
+772,Hertzog,Valerie,,Ng,Resident,P,,Ng
+773,Zhang,Yong-Li,,McLaren,Resident,P,,McLaren
+774,Utsalo,Vincent,,McLaren,Resident,P,,McLaren
+775,Guest Doctor,Bruyere,,Guest,Physician,B,,Guest
+776,Ansarian,Aylar,,Kilbertus,Resident,B,,Kilbertus
+777,Davis-Faroque,Nicole,,Caron,Resident,B,,Caron
+778,Ramin,Brodie,,McLaren,Resident,P,,McLaren
+779,Ramin,Brodie,,McLaren,Resident,P,,McLaren
+786,Dello-Sbarba,Sarah,,Ehrlich,Resident,B,,Ehrlich
+787,Brecher,Emily,,Boucher,Resident,B,,Boucher
+788,Seale,Janet,240424,Seale,Physician,B,83,Seale
+789,Gutcher,Spencer,,Boucher,Resident,B,,Boucher
+790,Lappalainen,Leslie,,Caron,Resident,B,,Caron
+791,Krechowicz,Regine,,Ponka,Resident,B,,Ponka
+792,Anand,Jacqueline,,Seale,Resident,B,,Seale
+793,Kazemi,Mojdeh,,Seale,Resident,B,,Ballou
+794,Folkerson,Catherine,,Ehrlich,Resident,B,,Ehrlich
+795,Ferraya Galliani,Mariella,,Mercer,Resident,B,,Mercer
+796,Lewis,Denice,,Gaba,Resident,B,,Stone
+797,Sheldrick,Melissa,,Gaba,Resident,B,,Stone
+798,Damjanovic,Jelena,,Czarnowski,Resident,B,,Czarnowski
+799,Lazaro,Carole,,Caron,Resident,B,,Caron
+800,Fortin-Langelier,Benjamin,,Caron,Resident,B,,Caron
+801,Yadav,Geeta,,Ponka,Resident,B,,Ponka
+802,Mioduszewski,Margaret,,Ehrlich,Resident,B,,Ehrlich
+803,Rogan,Milena,,Stone,Resident,B,,Stone
+804,Eisener-Parsche,Pamela,,Specialist,COE,N,,Eisener
+805,Campbell,Gregory,26561,Campbell,Physician,B,,Campbell
+806,Primrose Flushot,Clinic,,Primrose,RN,P,,Primrose
+807,Wilson,Margaret,,Mercer,Resident,B,,Mercer
+808,Lariviere,Katherine,22282,Lariviere,Physician,B,,Lariviere
+809,Primrose,Emergency,,Primrose,Physician,P,,Primrose
+810,Meeker,Tracy,,Shared Mental Health,Shared mental health,N,,AH Both
+811,Mankoo,Ravinder,,Shared Mental Health,Shared mental health,N,,AH Both
+813,Moran,Timothy,,Crabtree,Resident,P,,Crabtree
+814,Remy,Dana,,Allied Health,Social Worker,P,,Allied Health
+815,Spirometry,,,RN,RN,B,,RN
+816,Gaba,Priya,27548,Gaba,Physician,B,88,Gaba
+817,Rezaiefar,Parisa,16702,Rezaiefar,Physician,B,25,Rezaiefar
+818,Holt,Martha,23190,Holt,Physician,B,56,Holt
+819,Waters,Eugenie,,Physician,Resident,B,,Physician
+820,Psychiatry,Resident,,Shared Mental Health,Shared mental health,N,,AH Both
+821,Toth,Jason,,Crabtree,Resident,P,,Crabtree
+822,Zavalishina,Yelena,,Mavriplis,Resident,P,,Mavriplis
+823,Khan,Masood,,Rangwala,Resident,P,,Rangwala
+824,Mortera,Genevieve,,Rangwala,Resident,P,,Rangwala
+825,Lau,Jenny,,McLaren,Resident,P,,McLaren
+826,Cervantes,Alejandra,,Turley,Resident,P,,Turley
+827,Harelnikava,Maryna,,Czarnowski,Resident,B,,Shearman
+828,Moores,Andrew,,Ponka,Resident,B,,Shearman
+829,MacGregor,Katie,,Boucher,Resident,B,,Shearman
+830,Katz,Lauren,,Holt,Resident,B,,Holt
+831,Boutillier,Anna,,Gaba,Resident,B,,Mercer
+832,Schliewinsky,Kharim,,Mercer,Resident,B,,Mercer
+833,Al-Masri,Ahmad,,Rezaiefar,Resident,B,,Rezaiefar
+834,Reichman,Lee,,Rezaiefar,Resident,B,,Rezaiefar
+835,Doad,Ajinder,,Rezaiefar,Resident,B,,Rezaiefar
+836,Guigne,Francoise,,Ehrlich,Resident,B,,Ehrlich
+837,Last,Christine,,Gaba,Resident,B,,Gaba
+838,Majumder,Sampa,,Gruner,Resident,B,,Gruner
+839,Nguyen,Melanie,,Gruner,Resident,B,,Gruner
+840,John,Sanjna,,McKim,Resident,B,,McKim
+841,Hamilton,Lawrie,,Rangwala,Resident,B,,Rangwala
+842,Dunlop,Nicole,,Rangwala,Resident,B,,Rangwala
+843,Zakeriya,Razeriya,,Rangwala,Resident,P,,Rangwala
+845,Evans-Olders,Rebecca,28244,Evans-Olders,Physician,B,,Evans-Olders
+846,Gavigan,Genevieve,,Mercer,Resident,B,,Mercer
+847,Rostom,Ahmed,,Rangwala,Resident,P,,Rangwala
+848,Chronic Disease,RN,,CDMN,CDMN,B,,Bruyere
+849,Kucharski,Julia,,Ehrlich,Resident,B,,Ehrlich
+850,Sauder,Maxwell,,Caron,Resident,B,,Caron
+851,Chase,Teena,,Shearman,Resident,B,,Shearman
+852,Kilgour,Kathleen,,Shared Mental Health,Shared mental health,N,,AH Both
+853,Fanaeian,Joshua,,Seale,Resident,B,,Seale
+855,Cowger,Jeffery,,Seale,Resident,B,,Seale
+856,Corrigan,Linde,,Rangwala,Resident,P,,Rangwala
+857,Carmichael,Scott,,Mavriplis,Resident,P,,Mavriplis
+859,Smith,Andrew,,Seale,Resident,B,,Seale
+860,Afanasyeva,Marina,,Gruner,Resident,B,,
+861,Brandigambola,Sarah,,Holt,Resident,B,,
+862,Stratton,Julia,,Caron,Resident,B,,Caron
+863,TRAINING OFFICER -Karine Gauthier,TRAINING OFFICER -Karine Gauthier,,TRAINING OFFICER -Karine Gauthier,TRAINING OFFICER -Karine Gauthier,N,,
+864,Home,St. Mary's,,St. Mary's,St. Mary's,B,,
+865,Silbernagel,Lana,,Rangwala,Resident,P,,Rangwala
+866,Babani,Prakash,,Crabtree,Resident,P,,
+867,Junek,Adrienne,,Ehrlich,Resident,B,,Ehrlich
+871,Oumamass,Sanaa,,Ehrlich,Resident,B,,
+872,Gunaratne,Damian,,Czarnowski,Resident,B,,
+873,Mithani,Sharinbir,,McKim,Resident,B,,
+875,Khalid,Shereen,,Seale,Resident,B,,
+876,Chisholm,Susan,,Boucher,Resident,B,,
+877,Littman,Jordan,,Seale,Resident,B,,
+878,Avelino,Tara,,Boucher,Resident,B,,
+879,Hui,Tiffany,,Czarnowski,Resident,B,,
+880,Moukheiber,Dima,,Rezaiefar,Resident,B,,
+881,Bournival,Emily,,Ponka,Resident,B,,
+882,Rossi,Marisa,,Holt,Resident,B,,
+883,Takach,Martin,,Mercer,Resident,B,,
+887,Du,Cindy,,Crabtree,Resident,P,,
+888,Khan,Sarah,,Mavriplis,Resident,P,,
+889,Zavaglia,Bogardus,,Turley,Resident,P,,
+890,Thomas,Tomy,,Mavriplis,Resident,P,,
+891,Fong,Jessica,,Ng,Resident,P,,
+892,Moussa,Mina,,Ng,Resident,P,,
+893,Farley,Emma,,Rangwala,Resident,P,,
+894,Andrusiak,Tara,,McLaren,Resident,P,,
+895,Park,Jun,,Turley,Resident,P,,
+901,Goindi,Reena,,Goindi,Physician,P,,
+902,Dewan,Ambika,,Dewan,Physician,B,,
+903,Chin,Amy,,Chin,Physician,P,,
+904,Health,Primary Maternal,,Maternal,Maternal,B,,
+905,Aulakh,Amandev,,Rangwala,Physician,P,,
+906,Sparling,Jessica,,Primrose,Resident,P,,
+907,Maskerine,Courtney,,Gaba,Resident,P,,
+908,Zhand,Naista,,Seale,Resident,B,,
+909,BCTPrimrose,Primrose,,Primrose,Resident,P,,
+910,Primrose ,Foot,,Foot,Foot,P,,
+911,Ashdown,Lynn,,Rangwala,Resident,P,,
+912,Arnason,Trevor,,Rice,Resident,P,,
+913,Rivard,Marie-Helene,,Ehrlich,Resident,B,,
+914,Abadir,Anna Maria,,Gaba,Resident,B,,
+916,Mask,Fit Testing,,Mask Fit Testing,Mask Fit Testing,P,,
+917,NP,PAP,,PAP,NP,P,,
+918,GYNE ,Clinic,,Specialist,OBGYN,B,,
+919,Flushot,Clinic,,Flushot,Flushotclinic,B,,
+920,Weinstock,Mark,,Holt,Physician,B,,
+921,Bourns,Laura,,Ehrlich,Resident,B,,
+922,Afanasyeva,Marina,,Gruner,Resident,B,,
+925,BCTBlue,Blue,,Bruyere,Resident,B,,
+926,Ortho,Clinic,,Specialist,Ortho,B,,
+927,Campagna,Julie,,Allied Health,Dietitian,N,,
+928,Delva,Dianne,,Delva,Physician,B,,
+929,Hetland,Karissa,,Rangwala,Resident,P,,
+930,Clements,Jaclyn,,Maskerine,Resident,B,,
+931,Shanmuganathan,Sangitha,,Lebeau,Resident,B,,
+932,Morgan,Keith,,Greene,Resident,B,,
+933,Lee,Andrea,,Gaba,Resident,B,,
+934,Lakhani,Ekta,,Mavriplis,Resident,P,,
+935,Jahromi,Mana,,Crabtree,Resident,P,,
+936,Ward,Sarah,,McLaren,Resident,P,,McLaren
+937,Doulla,Jagdeep,,Ng,Resident,P,,
+938,Gropper,Aaron,,Rangwala,Resident,P,,
+939,Liao,Grace,,Rangwala,Resident,P,,
+940,Rashid,Ammar,,Turley,Resident,P,,Turley
+941,Kaefer,Nadine,,Gaba,Resident,B,,
+942,Sue-Chue-Lam,Derek,,Gruner,Resident,B,,
+943,Sharieff,Sheema,,Ponka,Resident,B,,
+944,Surmawala,Amir (Amirali),,Mercer,Resident,B,,
+945,Nielsen,Adam,,Maskerine,Resident,B,,
+946,Procino,Michael,,Adamson,Resident,B,,
+947,James,Andrea,,Adamson,Resident,B,,
+948,Pace,Michael,,Holt,Resident,B,,
+949,De Jesus,Anthony,,McKim,Resident,B,,
+950,Mishra,Ravi,,Rezaiefar,Resident,B,,
+951,Hope Centre,Bethany,,Bethany,Bethany,P,,
+952,Willmot,Lauren,,McLaren,Resident,P,,
+954,OTN,OTN,,OTN,OTN,B,,
+955,Maskerine,Courtney,,Maskerine,Physician,B,,
+956,Greene,Treena,,Greene,Physician,B,,
+957,Adamson,Charles,,Adamson,Physician,B,,
+958,Peter,Thomas,,Allied Health,Allied health Primrose,P,,
+959,Satsangi,Rashmi,,Gruner,Resident,B,,
+960,Damjanovic,Jelena,,Turley,Resident,P,,
+961,Caragianis,Anthony,,McLaren,Resident,P,,
+962,Borwein,Alexandra,,Rangwala,Resident,P,,
+963,Kneale,Anne,,McLaren,Resident,P,,
+964,Bellan,Daniel,,Ng,Resident,P,,
+965,Brokop,Michael,,Crabtree,Resident,P,,
+966,McRae,Kimberly,,Mavriplis,Resident,P,,
+967,Sobala Drozdowski,Monica,,NG,Resident,P,,
+968,Lipszyck,Jonathan,,Mavriplis,Resident,P,,
+970,Ching,Arthur,,Adamson,Resident,B,,
+972,Gagnon,Marie-Claude,,Ponka,Resident,B,,
+973,Hacker,Shauna,,Maskerine,Resident,B,,
+974,Hafizi,Rita,,Rezaiefar,Resident,B,,
+977,Kirloss,Mena,,Ponka,Resident,B,,
+978,Legault,Patrick,,Muggah,Resident,B,,
+980,Lotimer,Suzy,,Czarnowski,Resident,B,,
+981,Miller,Annelise,,Gruner,Resident,B,,
+982,Qiang,Wei,,Holt,Resident,B,,
+983,Springman,Maegan,,Delva,Resident,B,,
+984,Webber,Brandon,,Lebeau,Resident,B,,
+985,Walsh,Benjamin,,Czarnowski,Resident,B,,
+986,Chohan,Bikraj,,Lebeau,Resident,B,,
+987,Shah,Sohah,,Mercer,Resident,B,,
+988,BCTRed,Red,,Bruyere,Resident,B,,
+989,Forse,Kelly,,Rezaiefar,Resident,B,,
+990,Kendall,Claire,,Kendall,Physician,B,,
+991,McCusker,Lauren,,Shared Mental Health,Shared mental health,B,,
+992,Fraser-Roberts,Leigh,,Specialist,PEDS,B,,
+993,Schingh,Coleen,,Shared Mental Health,Shared mental health,B,,AH Both
+994,Lebeau,Marc,,Lebeau,Physician,B,,
+995,Frank,Andrew,,Specialist,Neurologist,N,,
+997,Home  visits,Palliative,,Physician,Physician,N,,
+998,McRae,Karen,,Shared Mental Health,Shared mental health,N,,AH Both
+999,Refugee,Refugee,,Refugee,Refugee,B,,
+1000,Maidment,Loanna,,Shared Mental Health,Shared mental health,B,,
+1004,Rochelle,Fatiha,,Shared Mental Health,Shared mental health,B,,
+1005,Bedard-Giulione,Rosalie,,Gaba,Resident,B,,
+1006,Jain,Apoorv,,Holt,Resident,B,,
+1007,Klaire,Sukhpreet,,Holt,Resident,B,,
+1008,Luymes,Emma,,Maskerine,Resident,B,,
+1009,Murray,Christopher,,Rezaiefar,Resident,B,,
+1010,Nguyen,Nina,,Lebeau,Resident,B,,
+1011,Niu,Jim,,Adamson,Resident,B,,
+1012,Rattan,Gurender,,Maskerine,Resident,B,,
+1013,Kaushik,Pooja ,,Ponka,Resident,B,,
+1014,Vescio,Stephani ,,Adamson,Resident,B,,
+1015,Xu,John,,Ponka,Resident,B,,
+1016,Zayed,Haroun ,,Gruner,Resident,B,,
+1017,Zygmunt,Austin,,Mercer,Resident,B,,
+1018,Lin,Pauline ,,Crabtree,Resident,P,,
+1019,Mindra,Sean ,,Rangwala,Resident,P,,
+1020,Holden,Helen ,,Turley,Resident,P,,
+1021,Riehl,Christina ,,Rangwala,Resident,P,,
+1022,Etarsky,Daniel ,,Turley,Resident,P,,
+1023,Ryu,Jennifer ,,McLaren,Resident,P,,
+1024,Wolak,Kevin ,,Mavriplis,Resident,P,,
+1025,Doulla,Jagdeep ,,Locum,Physician,P,,
+1026,Jitratkosol,Marissa,,Mercer,Resident,B,,
+1029,Bismil,Supuneet,,Shared Mental Health,Shared mental health,N,,AH Both
+1031,Castor,Rosy,,Diabetes,Diabetes RN,N,,Diabetes
+1033,Pap Clinic,,,Bruyere,Physician,B,,
+1034,Xu,Camille,,Allied Health,Dietitian,N,,
+1036,RedNurse 1,,,Red,Nurse,B,,
+1037,RedNurse 2,,,Red,Nurse,B,,
+1038,RedNurse 3,,,Red,Nurse,B,,
+1039,Meeking,Melissa,,Turley,Resident,P,,
+1040,Malouf,Eddy,,Crabtree,Resident,P,,
+1041,Sendi-Mukasa,Flavia,,Turley,Resident,P,,
+1042,Waters,Leigh,,Ng,Resident,P,,
+1043,Wiley,Erin,,McLaren,Resident,P,,
+1044,Laing,Scott,,Ng,Resident,P,,
+1045,BCTPrimrose,,,Primrose,Resident,P,,
+1046,Le Messurier,Jennifer,,Mavriplis,Resident,P,,
+1047,Bartellas,Emilia,,Gaba,Resident,B,,
+1048,Abdulhussein,Aajab,,Gruner,Resident,B,,
+1049,Collins,Celeste,,Muggah,Resident,B,,
+1050,Walker,Jennifer,,Delva,Resident,B,,
+1051,Labbe,Marie-Audrey,,Holt,Resident,B,,
+1052,Wong,Justin,,Ehrlich,Resident,B,,
+1053,Edwards,Christine,,Lebeau,Resident,B,,
+1054,Feinberg,Yael,,Lebeau,Resident,B,,
+1055,Dorward,Douglas,,Gruner,Resident,B,,
+1056,McGee,Sean ,,Gaba,Resident,B,,
+1057,Pokrupa-Nahanni,Tamara,,Holt,Resident,B,,
+1058,Locke,Tiffany,,Mercer,Resident,B,,
+1059,Ourahma,Ziad,,Rezaiefar,Resident,B,,
+1060,Morin,Anna,,Allied Health,Kinesiologist,N,,
+1061,Parenteau,Elizabeth,,Lebeau,Resident,B,,
+1062,KELLY GOWAN,KELLY GOWAN,,KELLY GOWAN,KELLY GOWAN,N,,
+1063,Carmel,Jean-Francois,,Crabtree,Resident,P,,
+1064,Jardine,Julie,,Shared Mental Health,Shared mental health,N,,
+1065,Hsueh,Jenny,,Holt,Resident,B,,
+1066,NORTH,NORTH,,NORTH,NORTH,N,,
+1067,Burns,Anne-Marie,,Allied Health,Dietitian,N,,
+1068,Zayed,Sufian,,Zayed,Physician,B,,
+1069,Jean,Kathleen,,Shared Mental Health,Shared mental health,N,,
+1070,Student,SW,,Allied Health,Social Worker,N,,
+1071,Barber,Janet,,Crabtree,Resident,P,,
+1072,Hilton,Tara Nicole,,McLaren,Resident,P,,
+1073,Mcgraw,Nicholas,,Rangwala,Resident,P,,
+1074,Trebuss,Kathryn,,Mavriplis,Resident,P,,
+1075,Woo,Laura,,Rangwala,Resident,P,,
+1076,Woo,Mark,,Turley,Resident,P,,
+1078,Kaur,Naseeb,,Turley,Resident,P,,
+1079,O'Neill,Trevor,,Ng,Resident,P,,
+1080,Elliott,Brittney,,Adamson,Resident,B,,
+1081,Akinbobola,Kikelomo,,Rezaiefar,Resident,B,,
+1082,Bosc,Anastasia,,Maskerine,Resident,B,,
+1083,Di Cintio,Antonio,,Zayed,Resident,B,,
+1084,Gasner,Michaela,,Maskerine,Resident,B,,
+1085,Haber,Sean ,,Adamson,Resident,B,,
+1086,Jeyakaran,Krishnagopi,,Holt,Resident,B,,
+1087,Kantor,Navot,,Delva,Resident,B,,
+1088,Easwaran,Vanathy,,Ponka,Resident,B,,
+1089,Migally,Bassem,,Lebeau,Resident,B,,
+1090,Moalim-Nour,Marian,,Gruner,Resident,B,,
+1091,O'Connor,Darragh,,Mercer,Resident,B,,
+1092,Poole,Tonya,,Gaba,Resident,B,,
+1093,Tennant,Catherine,,Zayed,Resident,B,,
+1094,Wang,Aili,,Ehrlich,Resident,B,,
+1095,Wang,Cindy,,Holt,Resident,B,,
+1096,Leblanc,Marisa,,Allied Health,Dietitian,N,,
+1097,Workshop,CBT,,CBT workshop,CBT workshop,N,,
+1099,Hafizi,Rita,,Hafizi,Physician,P,,
+1100,Ramcharan,Shauna,,Allied Health,Social Worker,B,,
+1101,Clinic,Pain,,Pain,Physician,N,,
+1102,Ahearn,Micayla,,Crabtree,Resident,P,,
+1103,McGuire,Shaun,,McGuire,Physician,B,,
+1104,Shehata,Nourhan,,Ng,Resident,P,,
+1105,Cornerstone,Princeton,,Cornerstone,Cornerstone,P,,
+1106,Nurses,Primrose,,Primrose,RN,P,,
+1107,Asselin,Thierry,,Zayed,Resident,B,,
+1108,Orsini,Rebecca,,Shared Mental Health,Shared mental health,N,,
+1110,Batten,Evan,,Crabtree,Resident,P,,
+1111,Ghosh,Anurita,,Rangwala,Resident,P,,
+1112,Liang,Eric,,Ng,Resident,P,,
+1113,Mukhar,Fadi,,Hafizi,Resident,P,,
+1114,Naz,Farah,,Stone,Resident,P,,
+1115,Jia,Jason,,Turley,Resident,P,,
+1116,Sanderson,Victoria,,Shared Mental Health,Shared mental health,N,,
+1117,Hughes-Large,Jennifer,,Ehrlich,Resident,B,,
+1118,Yoo,Rhena,,Gaba,Resident,B,,
+1119,Wang,Han,,Gaba,Resident,B,,
+1120,Macphee,Roderick,,Gruner,Resident,B,,
+1121,Morsara,Avneet,,Muggah,Resident,B,,
+1122,Abou-Hamde,Yara,,Gruner,Resident,B,,
+1123,Talla,Raja,,Ponka,Resident,B,,
+1124,Umadat,Vivake,,Adamson,Resident,B,,
+1125,Kotb,Ahmed,,Holt,Resident,B,,
+1126,Dill,Allyson,,Maskerine,Resident,B,,
+1127,Shani,Sandy,,Maskerine,Resident,B,,
+1128,Jansen,Theresa,,Mercer,Resident,B,,
+1129,Ntube Salley ,Tatiana,,Rezaiefar,Resident,B,,
+1130,Mookerji,Nikhile,,Zayed,Resident,B,,
+1131,Gelber,Nitai,,Holt,Resident,B,,
+1132,Deveaux,Elizabeth,,Mercer,Resident,B,,
+1133,Paul,Anthea,,Ehrlich,Resident,B,,
+1134,Al-Dujaili,Hashem,,Maskerine,Resident,B,,
+1137,RN3 - Primrose Nurse,,,RN3 - Primrose Nurse,RN3 - Primrose Nurse,P,,
+1139,Bruyère long term care,Bruyère long term care,,Bruyère long term care,Bruyère long term care,B,,
+1140,Hussey,Jennifer,,Bouchard,NP Student,P,,
+1141,Midwife Clinic - Val Albrecht,Midwife Clinic - Val Albrecht,,Midwife Clinic - Val Albrecht,Midwife Clinic - Val Albrecht,B,,
+1142,Gillis,Katherine,,Shared Mental Health,Shared mental health,N,,
+1144,Goldberg,Reuben,,Stone,Resident,P,,
+1167,Primrose COVID,Primrose COVID,,Primrose COVID,Primrose COVID,P,,
+1145,Gerber,Ashley,,Turley,Resident,P,,
+1146,Ramadan,Omar,,Rangwala,Resident,P,,
+1148,Di Giovanni,Bennett,,Hafizi,Resident,P,,
+1149,Edmison,Abby,,Rangwala,Resident,P,,
+1150,Crosby,Megan,,Ng,Resident,P,,
+1151,Pollak,Tara,,Turley,Resident,P,,
+1152,Mottaghi,Hatef,,Crabtree,Resident,P,,
+1153,Lee,Kathy,,Hafizi,Resident,P,,
+1155,Hayes,Tavis,,Stone,Resident,P,,
+1157,Covid Clinic 1,Covid Clinic 1,,Covid Clinic 1,Covid Clinic 1,B,,
+1158,Beanlands,Rachelle,,Gruner,Resident,B,,
+1159,Messiha,Sandra,,Gaba,Resident,B,,
+1160,Hickman,Andrew,,Lebeau,Resident,B,,
+1161,Fisher,Ruth,,Lebeau,Resident,B,,
+1162,Tissera,Gayanthi,,Ponka,Resident,B,,
+1163,Djokhdem (Abdul),Hadi,,Adamson,Resident,B,,
+1164,Bird,Kathleen,,Adamson,Resident,B,,
+1165,Smith (Rosemary),Claire,,Holt,Resident,B,,
+1166,Vo,Kim,,Holt,Resident,B,,
+1168,Ge,Yipeng,,Zayed,Resident,B,,
+1169,Vu,James,,Maskerine,Resident,B,,
+1170,Eldaba,Mariam,,Rezaiefar,Resident,B,,
+1171,Kacanski,Jelena,,Zayed,Resident,B,,
+1172,Covid Clinic 2,Covid Clinic 2,,Covid Clinic 2,Bruyère,B,,
+1173,Moore,Hailey,,Holt,Resident,B,,
+1174,ALC,ALC,,ALC,ALC,N,,

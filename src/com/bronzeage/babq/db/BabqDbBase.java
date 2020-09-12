@@ -94,6 +94,12 @@ public class BabqDbBase {
 		}
 	}
 
+	/**
+	 * @deprecated : Use DateFormatter.DateFormatter instead.
+	 * @param string
+	 * @return
+	 * @throws ParseException
+	 */
 	public static Date stringToDate(String string) throws ParseException {
 		if ((string == null) || (string.length() < 3))
 			return null;
