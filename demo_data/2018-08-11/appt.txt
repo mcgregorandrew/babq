@@ -1,0 +1,5 @@
+Version	1																					
+Date	Booking Date	Booking Time	Patient #	Provider ID	Provider Name	Time	Duration	Details	Status	No Show	LWBS	Billed	Repeat	Deleted	ForeColour	BackColour	Booking Initials	Comments	Alert	Standby Priority	Standby Availability	Type
+"July 1, 2018"	"July 3, 2018"	45882	33281	994	.Dr. Marc Lebeau	645	30	f/u work  Room 16	5	F	F	F	F	F	-16777216	-1	MLE			0		
+"July 4, 2018"	"July 4, 2018"	38852	37150	563	RN - Serge Charron	630	30		5	F	F	F	F	F	-16777216	-27561	SC			0		Procedures
+"July 4, 2018"	"July 4, 2018"	52568	1100	18	.Dr. Paul Crabtree	585	15		5	F	F	T	F	F	-16777216	-1	PC			0		

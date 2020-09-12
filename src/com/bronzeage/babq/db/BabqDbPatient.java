@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import com.bronzeage.babq.common.BabqUtils;
 import com.bronzeage.babq.common.BabqWarningList;
+import com.bronzeage.babq.formatter.DateFormatter;
 
 /**
  * @author andrew
@@ -33,7 +34,8 @@ public class BabqDbPatient extends BabqDbBase {
 			setString(prep, 3, tokens[4]); // first name
 			
 			//Changed in version 5.0
-			setString(prep, 4, tokens[68]); // health card province
+			//Changed in version 6.0
+			setString(prep, 4, tokens[69]); // health card province
 			
 			/**
 			 * @Since version 3.1. Address address to clinic output data
@@ -55,13 +57,14 @@ public class BabqDbPatient extends BabqDbBase {
 			setString(prep, 15, tokens[26]); // residential country
 			setString(prep, 16, tokens[27]); // residential postal code
 			
-			prep.setDate(17, stringToDate(tokens[31])); // Birth Date
+			prep.setDate(17, DateFormatter.stringToDate(tokens[31])); // Birth Date
 			setString(prep, 18, tokens[32]); //Sex
 			
 			//Changed in version 5.0
-			setString(prep, 19, tokens[69]); // Health Card Number
-			setString(prep, 20, tokens[71]); // Health Card Version Code
-			Date expiryDate = stringToDate(tokens[73]); // Card Expire Date
+			//Changed in version 6.0
+			setString(prep, 19, tokens[70]); // Health Card Number
+			setString(prep, 20, tokens[72]); // Health Card Version Code
+			Date expiryDate = DateFormatter.stringToDate(tokens[74]); // Card Expire Date
 			prep.setDate(21, expiryDate);
 			if ((expiryDate == null)
 					|| (BabqUtils.isLastDayOfMonth(expiryDate.getTime()))) {
@@ -101,7 +104,9 @@ public class BabqDbPatient extends BabqDbBase {
 //			}
 
 			setString(prep, 25, tokens[33]); // mDeleted
-			setString(prep, 26, tokens[78]); // mMember status
+			
+			//Changed in version 6.0
+			setString(prep, 26, tokens[79]); // mMember status
 			prep.setString(27, source);
 			prep.setInt(28, lineNumber);
 			

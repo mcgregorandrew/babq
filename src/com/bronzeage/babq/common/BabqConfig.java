@@ -61,8 +61,8 @@ public class BabqConfig {
 	private static long supressExpTimeInMillis_m = new GregorianCalendar(2006,
 			11, 25).getTimeInMillis();
 
-	private static String versionCode_ms = "5.1";
-	private static String dateCode_ms = "Aug 04, 2018";
+	private static String versionCode_ms = "6.1";
+	private static String dateCode_ms = "Oct 17, 2019";
 
 	private static Set<String> settablePrefs_ms = null;
 

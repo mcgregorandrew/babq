@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.bronzeage.babq.common.BabqWarningList;
+import com.bronzeage.babq.formatter.DateFormatter;
 
 /**
  * @author andrew
@@ -30,8 +31,8 @@ public class BabqDbAppt extends BabqDbBase {
 		try {
 			prep = makePrepStmt("INSERT INTO  " + tblName_m
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-			prep.setDate(1, stringToDate(tokens[0]));
-			prep.setDate(2, stringToDate(tokens[1]));
+			prep.setDate(1, DateFormatter.stringToDate(tokens[0]));
+			prep.setDate(2, DateFormatter.stringToDate(tokens[1]));
 			prep.setInt(3, Integer.parseInt(tokens[3]));
 			prep.setInt(4, Integer.parseInt(tokens[4]));
 			prep.setString(5, tokens[5]);
