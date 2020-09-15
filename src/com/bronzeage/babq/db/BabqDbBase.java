@@ -47,6 +47,10 @@ public class BabqDbBase {
 		prepStmt.execute();
 	}
 
+	public String getTblName() {
+		return tblName_m;
+	}
+	
 	public ResultSet doQuery(String query) throws SQLException {
 		if ((queryStmt_m != null) && (!queryStmt_m.isClosed()))
 			queryStmt_m.close();
@@ -130,7 +134,6 @@ public class BabqDbBase {
 			else
 				prep.setBytes(position, string.getBytes("UTF8"));
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

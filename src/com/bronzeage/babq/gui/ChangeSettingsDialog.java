@@ -37,6 +37,8 @@ public class ChangeSettingsDialog extends BaseDialog {
 
 	private JTextField billingSpreadSheetTemplate_m;
 
+	private JTextField excludedBillingCodeFile_m;
+
 	private JTextField nameExceptionFile_m;
 
 	private JCheckBox fixExpiryDates_m;
@@ -64,6 +66,12 @@ public class ChangeSettingsDialog extends BaseDialog {
 				.getPref(BabqConfig.EXC_NAME_FILE_NAME));
 		addFileSetting(row++, nameExceptionFile_m, JFileChooser.FILES_ONLY,
 				"Name Exception File:");
+
+		excludedBillingCodeFile_m = new JTextField(40);
+		excludedBillingCodeFile_m.setText(BabqConfig
+				.getPref(BabqConfig.EXCLUDED_BILLING_CODE_FILE_NAME));
+		addFileSetting(row++, excludedBillingCodeFile_m, JFileChooser.FILES_ONLY,
+				"Excluded Billing Code File:");
 
 		row++;
 		priceField_m = new JTextField(10);
@@ -171,6 +179,8 @@ public class ChangeSettingsDialog extends BaseDialog {
 				billingSpreadSheetTemplate_m.getText());
 		BabqConfig.setPref(BabqConfig.EXC_NAME_FILE_NAME, nameExceptionFile_m
 				.getText());
+		BabqConfig.setPref(BabqConfig.EXCLUDED_BILLING_CODE_FILE_NAME, excludedBillingCodeFile_m
+				.getText());
 		BabqConfig.setPref(BabqConfig.FIX_EXPIRY_ERRORS, ""
 				+ fixExpiryDates_m.isSelected());
 		BabqConfig.setPref(BabqConfig.IGNORE_EXPIRY_ERRORS, ""
@@ -185,6 +195,5 @@ public class ChangeSettingsDialog extends BaseDialog {
 
 	@Override
 	protected void cancel() {
-		// TODO
 	}
 }

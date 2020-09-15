@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -35,11 +36,14 @@ import com.bronzeage.babq.common.BabqZip;
 import com.bronzeage.babq.common.IBabqProgress;
 import com.bronzeage.babq.db.BabqDbAppt;
 import com.bronzeage.babq.db.BabqDbBase;
+import com.bronzeage.babq.db.BabqDbBillingCodes;
 import com.bronzeage.babq.db.BabqDbBillings;
 import com.bronzeage.babq.db.BabqDbNameExceptions;
 import com.bronzeage.babq.db.BabqDbPatient;
 import com.bronzeage.babq.db.BabqDbProvider;
 import com.bronzeage.babq.processing.BabqRules.BabqValErrorType;
+
+import javafx.util.Pair;
 
 /**
  * @author andrew
@@ -54,6 +58,7 @@ public class BabqProcessor implements IBabqProcessor {
 	BabqDbPatient patientDb_m;
 	BabqDbProvider providerDb_m;
 	BabqDbNameExceptions nameExcDb_m;
+	BabqDbBillingCodes billingCodesDb_m;
 	Set<String> badHealthNumList_m = new HashSet<String>();
 	String initError_m = null;
 	public static final String CANCEL_DELETED_COND = "details NOT LIKE 'cancelled%'"
@@ -68,11 +73,13 @@ public class BabqProcessor implements IBabqProcessor {
 		conn_m = BabqDbBase.makeConnection(BabqConfig.getJdbcInfo(), "babq");
 		if (conn_m == null)
 			initError_m = "Failed to connect to " + BabqConfig.getJdbcInfo();
+			
 		billingDb_m = new BabqDbBillings(conn_m);
 		apptDb_m = new BabqDbAppt(conn_m);
 		patientDb_m = new BabqDbPatient(conn_m);
 		providerDb_m = new BabqDbProvider(conn_m);
 		nameExcDb_m = new BabqDbNameExceptions(conn_m);
+		billingCodesDb_m = new BabqDbBillingCodes(conn_m);
 	}
 
 	static Logger logger_m = Logger.getLogger(BabqProcessor.class.getPackage()
@@ -90,11 +97,14 @@ public class BabqProcessor implements IBabqProcessor {
 				.getPref(BabqConfig.PATIENT_TBL_NAME);
 		final String appointmentFileName = BabqConfig
 				.getPref(BabqConfig.APPT_TBL_NAME);
+		final String billingCodeFileName = BabqConfig
+				.getPref(BabqConfig.BILLING_CODE_TBL_NAME);
 		final String providerFileName = BabqConfig
 				.getPref(BabqConfig.PROVIDER_TBL_NAME);
 		File apptFile = new File(appointmentFileName);
 		File patientFile = new File(patientFileName);
 		File providerFile = new File(providerFileName);
+		File billingCodeFile = new File(billingCodeFileName);
 		int count;
 
 		String[] strings;
@@ -117,7 +127,6 @@ public class BabqProcessor implements IBabqProcessor {
 		apptDb_m.createTbl();
 
 		logger_m.fine("Processing appt file " + apptFile);
-		warningList.addLog(apptFile.getName(), -1, "Opened file");
 
 		count = 0;
 		warningList.setFile(apptFile.getName());
@@ -173,11 +182,77 @@ public class BabqProcessor implements IBabqProcessor {
 		warningList.addLog(providerFile.getName(), -1, "Read " + count
 				+ " records");
 
+		billingCodesDb_m.createTbl();
+		if (billingCodeFile.length() > 0) {
+			loader = new BabqFileLoader(billingCodeFile, progressTracker_m, true);
+			strings = loader.readRecord(); // skip header
+			warningList.addLog(billingCodeFile.getName(), -1, "Opened file");
+			count = 0;
+			warningList.setFile(billingCodeFile.getName());
+			while ((strings = loader.readRecord()) != null) {
+				if (billingCodesDb_m.validateRecord(loader.getLineNumber(), strings,
+						warningList)) {
+					billingCodesDb_m.addRecord(loader.getLineNumber(), strings,
+							warningList);
+					count++;
+				}
+			}
+			loader.close();
+			
+			warningList.addLog(billingCodeFile.getName(), -1, "Read " + count
+					+ " records");
+			
+			// If there are multiple codes for a given patient and date we need to 
+			// reduce this to 1 but preferentially dropping the excluded codes.
+			removeDuplicateBillingCodeRecords(billingCodesDb_m, warningList);
+			
+		} else {
+			warningList.addLog(billingCodeFile.getName(), -1, "No billing code file loaded");
+			
+		}
 		loadNameExcTbl(warningList);
 
 		BabqRules.validateAllPatientsFound(conn_m, warningList);
 		BabqRules.validateAllProvidersFound(conn_m, warningList);
 
+	}
+
+	private void removeDuplicateBillingCodeRecords(BabqDbBillingCodes billingCodesDb, BabqWarningList warningList) throws IOException {
+		Set<String> excludedBillingCodeSet = loadExcludedBillingCodesSet(warningList);
+		
+		// Get the list of records with more that one record for a healthnumber on a given day
+		List<Pair<String, String>> listOfDuplCodeRecs = billingCodesDb.getListOfRecordsWithMoreThanOneCodeInDay(warningList);
+		
+		// For each of these healthnumber/apptdate, get the list of billing codes
+		for (Pair<String, String> rec: listOfDuplCodeRecs) {
+			// Read healthnumber and date
+			String apptDate = rec.getKey();
+			String healthNumber = rec.getValue();
+			// Make list of billing codes
+			List<String> billingCodesFound = billingCodesDb.getBillingCodesForDateAndHn(apptDate, healthNumber, warningList);
+			
+			String firstOk = null;
+			for (String billingCode: billingCodesFound) {
+				if (!excludedBillingCodeSet.contains(billingCode)) {
+					if (firstOk == null) {
+						firstOk = billingCode;
+					}
+				}
+			}
+			
+			String codeToKeep;
+			if (firstOk != null) {
+				// If there is a non-excluded billing code, keep that, delete all others
+				codeToKeep = firstOk;
+			} else {
+				// If there is only excluded billing codes, keep the first and delete the others
+				codeToKeep = billingCodesFound.get(0);
+			}
+			
+			// Delete the code we want to keep from the list of code found
+			billingCodesFound.remove(codeToKeep);
+			billingCodesDb.deleteMatchingRecords(apptDate, healthNumber, billingCodesFound, warningList);
+		}
 	}
 
 	public void loadNameExcTbl(BabqWarningList warningList) throws Exception {
@@ -186,7 +261,6 @@ public class BabqProcessor implements IBabqProcessor {
 		int count = 0;
 		File excFile = new File(BabqConfig
 				.getPref(BabqConfig.EXC_NAME_FILE_NAME));
-		logger_m.info(excFile.getAbsolutePath() +" "+ excFile.getName());
 		nameExcDb_m.createTbl();
 		if (excFile.exists()) {
 			loader = new BabqFileLoader(excFile, progressTracker_m, false);
@@ -201,7 +275,7 @@ public class BabqProcessor implements IBabqProcessor {
 					count++;
 				}
 			}
-			warningList.addLog(excFile.getName(), -1, "Read " + count
+			warningList.addLog(excFile.getName(), -1, "Billing exclusion file: read " + count
 					+ " records");
 
 		}
@@ -217,15 +291,14 @@ public class BabqProcessor implements IBabqProcessor {
 	public void doMakeQbBillingTbl(BabqWarningList warningList)
 			throws SQLException {
 
-		logger_m
-				.warning("Checking Quebec babies without health card numbers... ");
+		logger_m.info("Checking Quebec babies without health card numbers... ");
 		Collection<String> cardlessQcBabies = getQuebecBabiesWithoutNumbers();
 
 		logger_m.info("cardlessQcBabies: " + cardlessQcBabies.size());
 		checkQuebecBabiesWithoutNumbers(cardlessQcBabies, warningList);
 
 		int count = 0;
-		logger_m.warning("Creating billing tbl... ");
+		logger_m.info("Creating billing tbl... ");
 		String patientFile = new File(BabqConfig
 				.getPref(BabqConfig.PATIENT_TBL_NAME)).getName();
 		billingDb_m.createTbl();
@@ -261,7 +334,6 @@ public class BabqProcessor implements IBabqProcessor {
 							+ " WHERE apptTbl.PatientNum=patientTbl.PatientNum"
 							+ " AND providerTbl.ProviderId = apptTbl.ProviderId"
 							+ " AND " + CANCEL_DELETED_COND
-							//TODO: Add project version number for the change
 							//Old code = + " AND patientTbl.Province = 'QC'");
 							+ " AND patientTbl.Province != 'ON'");
 
@@ -296,6 +368,7 @@ public class BabqProcessor implements IBabqProcessor {
 				String province = rs.getString("patientTbl.Province");
 				String location = rs.getString("providerTbl.location");
 				String sourceFile = rs.getString("patientTbl.SourceFile");
+				String billingCode = null;  // Filled in later
 				int lineNumber = rs.getInt("patientTbl.SourceLineNumber");
 				java.sql.Date dateOfService = rs.getDate("apptTbl.ApptDate");
 				if (BabqRules.validateBasicFields(sourceFile, lineNumber,
@@ -346,7 +419,8 @@ public class BabqProcessor implements IBabqProcessor {
 									firstName, //
 									dateOfBirth, // 
 									sex, // 
-									location, dateOfService, usingParentHealthNum, province, mailingAddress, resAddress);
+									location, dateOfService, usingParentHealthNum, province, mailingAddress, resAddress,
+									billingCode);
 						count++;
 					}
 
@@ -359,12 +433,40 @@ public class BabqProcessor implements IBabqProcessor {
 			stmt.close();
 		}
 
-		logger_m
-				.warning("Creating records for Quebec babies without health card numbers... ");
+		logger_m.warning("Creating records for Quebec babies without health card numbers... ");
 		mergeQcBabiesToBillingTable(cardlessQcBabies, warningList);
 
-		warningList
-				.addLog("", -1, "Billing tbl contains " + count + " records");
+		// Set the billing codes for the billing records
+		Statement stmt2 = conn_m.createStatement();
+		try {
+			stmt2.executeUpdate("UPDATE " + billingDb_m.getTblName() + " bt SET bt.billingcode = "
+					+ "(SELECT billingcode from " + billingCodesDb_m.getTblName() + " bct WHERE "
+					+ "  bct.apptdate = bt.dateofservice AND "
+					+ "  bct.healthnumber = bt.healthnumber)");
+
+		} finally {
+			stmt2.close();
+		}
+		
+		// Remove the records with excluded billing codes
+		try {
+			Set<String> excludedBillingCodeSet = loadExcludedBillingCodesSet(warningList);
+			if (!excludedBillingCodeSet.isEmpty()) {
+				stmt2 = conn_m.createStatement();
+				try {
+					int numRec = stmt2.executeUpdate("DELETE FROM " + billingDb_m.getTblName() + " WHERE " + "  billingCode IN ('"
+							+ String.join("','", excludedBillingCodeSet) + "')");
+					warningList.addLog("", -1, "Billing tbl removed " + numRec + " records because the billing codes for these visits are not allowed");
+
+				} finally {
+					stmt2.close();
+				}
+			}
+		} catch (IOException e) {
+			warningList.addWarning("", -1, "Error loading list of excluded billing codes: " + e);
+			return;
+		}
+		warningList.addLog("", -1, "Billing tbl contains " + count + " records");
 
 	}
 
@@ -480,6 +582,7 @@ public class BabqProcessor implements IBabqProcessor {
 				String resAddress = rs.getString("ResAddrLine1")+", "+rs.getString("ResAddrLine2")
 										+rs.getString("ResCity")+", "+rs.getString("ResProvince")+", "
 										+rs.getString("ResCountry")+", "+rs.getString("ResPostal");
+				String billingCode = rs.getString("billingCodeTbl.BillingCode");
 
 				logger_m.warning("Added QC baby record for "
 						+ rs.getString("patientTbl.FirstName") + " "
@@ -493,7 +596,8 @@ public class BabqProcessor implements IBabqProcessor {
 						firstName, //
 						dateOfBirth, // 
 						sex, // 
-						location, dateOfService, true, province, mailingAddress, resAddress);
+						location, dateOfService, true, province, mailingAddress, resAddress,
+						billingCode);
 			}
 		} finally {
 			stmt.close();
@@ -599,11 +703,9 @@ public class BabqProcessor implements IBabqProcessor {
 	 * com.bronzeage.babq.processing.IBabqProcessor#loadBillingTbl(java.io.File,
 	 * com.bronzeage.babq.common.BabqWarningList)
 	 */
-	public void loadBillingTbl(BabqWarningList warningList)
-
-	throws IOException, SQLException, ParseException {
+	public void loadBillingTbl(BabqWarningList warningList)	throws IOException, SQLException, ParseException {
 		File inFile = new File(BabqConfig
-				.getPref(BabqConfig.BILLING_TBL_FILE_NAME));
+				.getPref(BabqConfig.BILLING_CODE_TBL_NAME));
 		if (!inFile.isFile()) {
 			warningList.addWarning(-1, "File " + inFile.getAbsolutePath()
 					+ " was not found");
@@ -624,6 +726,34 @@ public class BabqProcessor implements IBabqProcessor {
 		loader.close();
 
 		warningList.addLog(fileName, -1, "Read " + count + " records");
+	}
+
+	/**
+	 * Load file of billing codes that cannot be sent to Quebec
+	 */
+	public Set<String> loadExcludedBillingCodesSet(BabqWarningList warningList)	throws IOException {
+		File inFile = new File(BabqConfig
+				.getPref(BabqConfig.EXCLUDED_BILLING_CODE_FILE_NAME));
+		if (!inFile.isFile()) {
+			warningList.addWarning(-1, "File " + inFile.getAbsolutePath()
+					+ " was not found");
+			throw new IOException("File " + inFile.getAbsolutePath() + " was not found");
+		}
+		BabqFileLoader loader = new BabqFileLoader(inFile, progressTracker_m,
+				false);
+		Set<String> excludedBillingCodesSet = new HashSet<String>();
+		String fileName = inFile.getName();
+		warningList.addLog(fileName, -1, "Opened file");
+		String strings[] = loader.readRecord(); // Skip header line
+		int count = 0;
+		while ((strings = loader.readRecord()) != null) {
+			excludedBillingCodesSet.add(strings[0]);
+			count++;
+		}
+		loader.close();
+
+		warningList.addLog("", -1, "Read " + count + " records from the excluded billing code file");
+		return excludedBillingCodesSet;
 	}
 
 	/*
@@ -726,7 +856,8 @@ public class BabqProcessor implements IBabqProcessor {
 							firstName, //
 							dateOfBirth, // 
 							sex, // 
-							"", dateOfService, usingParentHealthNum, province, mailingAddress, resAddress);
+							"", dateOfService, usingParentHealthNum, province, mailingAddress, resAddress,
+							null);
 				}
 
 				if (valResult == BabqValErrorType.NAME_ERROR) {
@@ -841,6 +972,7 @@ public class BabqProcessor implements IBabqProcessor {
 	 * @see com.bronzeage.babq.processing.IBabqProcessor#clearAllTables()
 	 */
 	public void clearAllTables(BabqWarningList warningList) throws SQLException {
+
 		billingDb_m.createTbl();
 		apptDb_m.createTbl();
 		patientDb_m.createTbl();
@@ -915,7 +1047,7 @@ public class BabqProcessor implements IBabqProcessor {
 			if (!excFile.getParentFile().isDirectory()) {
 				if (!excFile.getParentFile().mkdirs()) {
 					throw new IOException(
-							"Failed to create template directory "
+							"Failed to create parent directory "
 									+ excFile.getParentFile());
 				}
 			}
@@ -928,7 +1060,7 @@ public class BabqProcessor implements IBabqProcessor {
 			if (!qcBilling.getParentFile().isDirectory()) {
 				if (!qcBilling.getParentFile().mkdirs()) {
 					throw new IOException(
-							"Failed to create template directory "
+							"Failed to create parent directory "
 									+ qcBilling.getParentFile());
 				}
 				BabqUtils.copyFromResource("resources/qcBillingTemplate.xls",
@@ -942,10 +1074,10 @@ public class BabqProcessor implements IBabqProcessor {
 			if (!summaryFile.getParentFile().isDirectory()) {
 				if (!summaryFile.getParentFile().mkdirs()) {
 					throw new IOException(
-							"Failed to create template directory "
+							"Failed to create parent directory "
 									+ summaryFile.getParentFile());
 				}
-				BabqUtils.copyFromResource("summary.xls", summaryFile);
+				BabqUtils.copyFromResource("resources/summary.xls", summaryFile);
 			}
 		}
 
@@ -955,11 +1087,24 @@ public class BabqProcessor implements IBabqProcessor {
 			if (!teamSummaryFile.getParentFile().isDirectory()) {
 				if (!teamSummaryFile.getParentFile().mkdirs()) {
 					throw new IOException(
-							"Failed to create template directory "
+							"Failed to create parent directory "
 									+ teamSummaryFile.getParentFile());
 				}
-				BabqUtils.copyFromResource("teamSummary.xls", teamSummaryFile);
+				BabqUtils.copyFromResource("resources/teamSummary.xls", teamSummaryFile);
 			}
+		}
+
+		File excludedBillingCodesFile = new File(BabqConfig
+				.getPref(BabqConfig.EXCLUDED_BILLING_CODE_FILE_NAME));
+		if (!excludedBillingCodesFile.exists()) {
+			if (!excludedBillingCodesFile.getParentFile().isDirectory()) {
+				if (!excludedBillingCodesFile.getParentFile().mkdirs()) {
+					throw new IOException(
+							"Failed to create parent directory "
+									+ excludedBillingCodesFile.getParentFile());
+				}
+			}
+			BabqUtils.copyFromResource("resources/excludedBillingCodes.csv", excludedBillingCodesFile);
 		}
 
 	}

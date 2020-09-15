@@ -85,4 +85,25 @@ public class BabqDbAppt extends BabqDbBase {
 		doUpdate("CREATE INDEX PatientNumIndex ON " + tblName_m + "(PatientNum)");
 		doUpdate("CREATE INDEX ProviderIDIndex ON " + tblName_m + "(ProviderID)");
 	}
+	
+	public void dropTbl() {
+		PreparedStatement stmt = null;
+		try {
+			stmt = makePrepStmt("DROP VIEW patientWithApptView");
+			try {
+				executePrepStmt(stmt);
+			}
+			catch (SQLException e) {
+			}
+
+		} catch (Throwable e) {
+		} finally {
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+				}
+		}
+		super.dropTbl();
+	}
 }

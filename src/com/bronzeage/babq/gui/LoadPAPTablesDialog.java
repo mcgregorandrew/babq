@@ -35,6 +35,7 @@ public class LoadPAPTablesDialog extends BaseDialog
     private final JTextField patientFileName_m;
     private final JTextField appointmentFileName_m;
     private final JTextField providerFileName_m;
+    private final JTextField billingCodeFileName_m;
 
     public LoadPAPTablesDialog(final MainWindow mainWindow)
     {
@@ -46,7 +47,9 @@ public class LoadPAPTablesDialog extends BaseDialog
         appointmentFileName_m =
             new JTextField(BabqConfig.getPref(BabqConfig.APPT_TBL_NAME), 40);
         providerFileName_m =
-            new JTextField(BabqConfig.getPref(BabqConfig.PROVIDER_TBL_NAME), 40);
+                new JTextField(BabqConfig.getPref(BabqConfig.PROVIDER_TBL_NAME), 40);
+        billingCodeFileName_m =
+                new JTextField(BabqConfig.getPref(BabqConfig.BILLING_CODE_TBL_NAME), 40);
 
         JButton patientFileButton = new JButton("Browse");
         patientFileButton.addActionListener(new ActionListener()
@@ -111,6 +114,27 @@ public class LoadPAPTablesDialog extends BaseDialog
                 }
             });
 
+        JButton billingCodeFileButton = new JButton("Browse");
+        billingCodeFileButton.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent e)
+                {
+                    final JFileChooser chooser =
+                        new JFileChooser(billingCodeFileName_m.getText());
+                    chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    chooser.setMultiSelectionEnabled(false);
+                    chooser.setDialogTitle("Select Billing Code File");
+                    final int result =
+                        chooser.showDialog(LoadPAPTablesDialog.this, "Select");
+
+                    if (result == JFileChooser.APPROVE_OPTION)
+                    {
+                        final File selectedFile = chooser.getSelectedFile();
+                        billingCodeFileName_m.setText(selectedFile.getPath());
+                    }
+                }
+            });
+
         int row = 0;
 
         add(new JLabel("Patient File:"),
@@ -142,6 +166,16 @@ public class LoadPAPTablesDialog extends BaseDialog
         add(providerFileButton, new Gbc(2, row).setInsets(4).setAnchor(
             GridBagConstraints.WEST));
         ++row;
+
+        add(new JLabel("Billing Code File:"),
+                new Gbc(0, row).setInsets(4).setAnchor(GridBagConstraints.EAST));
+        add(billingCodeFileName_m,
+        		new Gbc(1, row).setInsets(4).setAnchor(GridBagConstraints.WEST).setFill(
+                    GridBagConstraints.HORIZONTAL).setWeight(100, 0));
+        add(billingCodeFileButton, new Gbc(2, row).setInsets(4).setAnchor(
+                GridBagConstraints.WEST));
+        ++row;
+
     }
 
     @Override
@@ -152,7 +186,9 @@ public class LoadPAPTablesDialog extends BaseDialog
         BabqConfig.setPref(BabqConfig.PROVIDER_TBL_NAME,
             providerFileName_m.getText());
         BabqConfig.setPref(BabqConfig.APPT_TBL_NAME,
-            appointmentFileName_m.getText());
+                appointmentFileName_m.getText());
+        BabqConfig.setPref(BabqConfig.BILLING_CODE_TBL_NAME,
+                billingCodeFileName_m.getText());
      
     }
 

@@ -1,0 +1,25 @@
+Version	1																						
+Date	Booking Date	Booking Time	Patient #	Provider ID	Provider Name	Time	Duration	Details	Status	No Show	LWBS	Billed	Repeat	Deleted	ForeColour	BackColour	Booking Initials	Comments	Alert	Standby Priority	Standby Availability	Type	Late
+03-Aug-20	03-Aug-20	77140	57740	562	Evening Clinic	600	15	Back pain	0	F	F	F	F	F	F	-16777216	-1	ME20			0		
+03-Aug-20	03-Aug-20	45215	35244	1	.Dr. Alan Ng	540	30	Back pain	0	F	F	F	T	F	F	-16777216	-1	RB20			0		
+03-Aug-20	03-Aug-20	45496	52928	1	.Dr. Alan Ng	570	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RB20			0		
+03-Aug-20	03-Aug-20	45561	36248	1	.Dr. Alan Ng	600	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RB20			0		
+03-Aug-20	03-Aug-20	42722	49983	1	.Dr. Alan Ng	690	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RB20			0		
+03-Aug-20	03-Aug-20	42793	61605	1	.Dr. Alan Ng	750	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RB20			0		
+03-Aug-20	03-Aug-20	42868	36475	1	.Dr. Alan Ng	780	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RB20			0		
+03-Aug-20	03-Aug-20	42965	49984	1	.Dr. Alan Ng	810	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RB20			0		
+03-Aug-20	03-Aug-20	43286	37279	1	.Dr. Alan Ng	930	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RB20			0		
+03-Aug-20	03-Aug-20	42135	42532	1	.Dr. Alan Ng	945	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RB20			0		
+03-Aug-20	03-Aug-20	43807	52928	1	.Dr. Alan Ng	960	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RB20			0		
+03-Aug-20	03-Aug-20	41817	41339	1	.Dr. Alan Ng	780	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RF20			0		
+03-Aug-20	03-Aug-20	40705	52219	1	.Dr. Alan Ng	720	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RF20			0		
+03-Aug-20	03-Aug-20	40913	41339	1	.Dr. Alan Ng	735	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RF20			0		
+05-Aug-20	05-Aug-20	41588	69677	1	.Dr. Alan Ng	750	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RF20			0		
+05-Aug-20	05-Aug-20	69709	37754	1	.Dr. Alan Ng	825	15	Back pain	0	F	F	F	F	F	F	-16777216	-1	RF20			0		
+05-Aug-20	05-Aug-20	42475	56143	1	.Dr. Alan Ng	885	15	Back pain	0	F	F	F	T	F	F	-16777216	-1	RF20			0		
+05-Aug-20	05-Aug-20	2969	68649	1	.Dr. Alan Ng	945	15	Back pain	0	F	F	F	F	F	F	-16777216	-1	RF20			0		
+05-Aug-20	05-Aug-20	51829	71068	1	.Dr. Alan Ng	870	15	Back pain	5	F	F	F	F	F	F	-16777216	-1	KB20			0		
+05-Aug-20	05-Aug-20	42058	36316	817	.Dr. Parisa Rezaiefar	525	495	Back pain	0	F	F	F	F	F	F	-16777216	-37009	KG			0		
+05-Aug-20	05-Aug-20	30040	42796	848	ffmc-CDMN-Chronic Disease RN	540	400	Back pain	0	F	F	F	F	F	F	-16777216	-37009	ILL			0		
+05-Aug-20	05-Aug-20	47803	6590	764	.Dr. Elizabeth Muggah	510	735	Back pain	0	F	F	F	F	F	F	-16777216	-37009	KG			0		
+05-Aug-20	05-Aug-20	47809	64320	7	.Dr. Kevin Pottie	510	735	Back pain	0	F	F	F	F	F	F	-16777216	-37009	KG			0		

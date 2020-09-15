@@ -30,8 +30,8 @@ public class BabqConfig {
 	// Set in dialogs
 	public static final String PATIENT_TBL_NAME = "patientTblFileName";
 	public static final String PROVIDER_TBL_NAME = "providerTblFileName";
+	public static final String BILLING_CODE_TBL_NAME = "billingCodeTblFileName";
 	public static final String APPT_TBL_NAME = "apptTblFileName";
-	public static final String BILLING_TBL_FILE_NAME = "billingTblFileName";
 	public static final String SERVICE_PRICE = "servicePrice";
 	public static final String FIX_EXPIRY_ERRORS = "fixExpiryErrors";
 	public static final String IGNORE_EXPIRY_ERRORS = "ignoreExpiryErrors";
@@ -39,6 +39,7 @@ public class BabqConfig {
 	public static final String JDBC_URI = "jdbcUri";
 	public static final String AUTO_CLEAR_DATA = "autoClearData";
 	public static final String EXC_NAME_FILE_NAME = "excNameTblFileName";
+	public static final String EXCLUDED_BILLING_CODE_FILE_NAME = "excludedBillingCodeFileName";
 
 	// Set in settings
 	public static final String QB_BILLING_TEMPLATE_FILE = "billingXlsTemplateFile";
@@ -61,8 +62,8 @@ public class BabqConfig {
 	private static long supressExpTimeInMillis_m = new GregorianCalendar(2006,
 			11, 25).getTimeInMillis();
 
-	private static String versionCode_ms = "6.1";
-	private static String dateCode_ms = "Oct 17, 2019";
+	private static String versionCode_ms = "7.1";
+	private static String dateCode_ms = "Sept 20, 2020";
 
 	private static Set<String> settablePrefs_ms = null;
 
@@ -71,9 +72,10 @@ public class BabqConfig {
 		settablePrefs_ms.add(PREFS_INITIALIZED);
 		settablePrefs_ms.add(DIR_ROOT);
 		settablePrefs_ms.add(PATIENT_TBL_NAME);
+		settablePrefs_ms.add(BILLING_CODE_TBL_NAME);
 		settablePrefs_ms.add(PROVIDER_TBL_NAME);
 		settablePrefs_ms.add(APPT_TBL_NAME);
-		settablePrefs_ms.add(BILLING_TBL_FILE_NAME);
+		settablePrefs_ms.add(BILLING_CODE_TBL_NAME);
 		settablePrefs_ms.add(QB_BILLING_TEMPLATE_FILE);
 		settablePrefs_ms.add(SERVICE_PRICE);
 		settablePrefs_ms.add(FIX_EXPIRY_ERRORS);
@@ -195,6 +197,8 @@ public class BabqConfig {
 				result = getDefaultPath("updatedFiles", "ageSummary.xls");
 			else if (name.equals(EXC_NAME_FILE_NAME))
 				result = getDefaultPath("updatedFiles", "nameExceptions.csv");
+			else if (name.equals(EXCLUDED_BILLING_CODE_FILE_NAME))
+				result = getDefaultPath("updatedFiles", "excludedBillingCodes.csv");
 			else if (name.equals(FIX_EXPIRY_ERRORS))
 				result = "true";
 			else if (name.equals(IGNORE_EXPIRY_ERRORS))

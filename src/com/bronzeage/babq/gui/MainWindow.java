@@ -203,6 +203,7 @@ public class MainWindow extends JFrame {
 
 		if (processor_m.getInitError() != null) {
 			progressTracker_m.setProgressString(processor_m.getInitError());
+			log(processor_m.getInitError());
 			log("Application disabled.");
 
 		} else {
@@ -219,8 +220,8 @@ public class MainWindow extends JFrame {
 				BabqConfig.setPref(BabqConfig.PROVIDER_TBL_NAME, inputDirRoot
 						.getAbsolutePath());
 			}
-			if (BabqConfig.getPref(BabqConfig.BILLING_TBL_FILE_NAME) == null) {
-				BabqConfig.setPref(BabqConfig.BILLING_TBL_FILE_NAME, inputDirNow
+			if (BabqConfig.getPref(BabqConfig.BILLING_CODE_TBL_NAME) == null) {
+				BabqConfig.setPref(BabqConfig.BILLING_CODE_TBL_NAME, inputDirNow
 						.getAbsolutePath());
 			}
 

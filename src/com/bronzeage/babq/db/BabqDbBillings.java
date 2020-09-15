@@ -31,9 +31,10 @@ public class BabqDbBillings extends BabqDbBase {
 	public void addRecord(String sourceFile, int lineNumber, String healthNum,
 			Date expiryDate, String surname, String firstName,
 			Date dateOfBirth, String sex, String site, Date dateOfService,
-			boolean usingParentHealthNum, String healthCardProvince, String mailingAddress, String resAddress) throws SQLException {
+			boolean usingParentHealthNum, String healthCardProvince, String mailingAddress, String resAddress,
+			String billingCode) throws SQLException {
 		PreparedStatement prep = makePrepStmt("INSERT INTO billingTbl "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		prep.setString(1, healthNum);
 		prep.setDate(2, expiryDate);
 		setString(prep, 3, surname);
@@ -52,6 +53,7 @@ public class BabqDbBillings extends BabqDbBase {
 		prep.setString(12, healthCardProvince);
 		prep.setString(13, mailingAddress);
 		prep.setString(14, resAddress);
+		prep.setString(15, billingCode);
 		
 		prep.execute();
 		prep.close();
@@ -61,18 +63,35 @@ public class BabqDbBillings extends BabqDbBase {
 	public void addRecord(String sourceFile, int lineNumber, String strings[],
 			BabqWarningList warningList) throws SQLException, ParseException {
 		try {
-			addRecord(sourceFile, lineNumber, strings[0],
-					stringYMDToDate(strings[1]), // DoExp
-					strings[2], strings[3], // firstName
-					stringYMDToDate(strings[4]), // DoB
-					strings[5], // sex
-					strings[7], // site
-					stringYMDToDate(strings[6]), // DoS
-					strings[8].equals("T"), // Using parent
-					strings[9], //HealthCardProvince
-					strings[10], //Mailing address
-					strings[11] //Residential address
-			);
+			if (strings.length == 12) { // File from old version of software
+				addRecord(sourceFile, lineNumber, strings[0],
+						stringYMDToDate(strings[1]), // DoExp
+						strings[2], strings[3], // firstName
+						stringYMDToDate(strings[4]), // DoB
+						strings[5], // sex
+						strings[7], // site
+						stringYMDToDate(strings[6]), // DoS
+						strings[8].equals("T"), // Using parent
+						strings[9], //HealthCardProvince
+						strings[10], //Mailing address
+						strings[11], //Residential address
+						null
+				);
+			} else {
+				addRecord(sourceFile, lineNumber, strings[0],
+						stringYMDToDate(strings[1]), // DoExp
+						strings[2], strings[3], // firstName
+						stringYMDToDate(strings[4]), // DoB
+						strings[5], // sex
+						strings[7], // site
+						stringYMDToDate(strings[6]), // DoS
+						strings[8].equals("T"), // Using parent
+						strings[9], //HealthCardProvince
+						strings[10], //Mailing address
+						strings[11], //Residential address
+						strings[12] // Billing code (may be empty)
+				);
+			}				
 		} catch (Throwable t) {
 			warningList.addWarning(sourceFile, lineNumber,
 					"Error in loading record: " + t.toString());
@@ -102,7 +121,8 @@ public class BabqDbBillings extends BabqDbBase {
 					rs.getString("UsingParentHealthNum"), // 
 					rs.getString("HealthCardProvince"), //
 					rs.getString("MailingAddress"), //
-					rs.getString("ResAddress") //
+					rs.getString("ResAddress"), //
+					rs.getString("BillingCode") //
 					);
 			if ((++count % 100) == 0)
 				if (progressTracker != null)
@@ -135,7 +155,8 @@ public class BabqDbBillings extends BabqDbBase {
 				 */
 				+ "HealthCardProvince VARCHAR(250), "
 				+ "MailingAddress VARCHAR(1255), "
-				+ "ResAddress VARCHAR(1255) "
+				+ "ResAddress VARCHAR(1255), "
+				+ "BillingCode VARCHAR(12) "
 				+ ")");
 		doUpdate("CREATE INDEX HealthNumIndex ON " + tblName_m
 				+ " (HealthNumber)");

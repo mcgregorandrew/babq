@@ -126,7 +126,6 @@ public class BabqRules {
 			boolean okToUseParentHealthNum, BabqWarningList warningList,
 			Integer patientNum) {
 		try {
-			System.out.println("--------validateHealthNum ");
 			BabqValErrorType recordOk = BabqValErrorType.NO_ERROR;
 			
 			// Trim names in case they have leading spaces
@@ -149,7 +148,6 @@ public class BabqRules {
 				namePart = filteredSurname.substring(0, 3);
 
 			// Now add first letter of first name
-			System.out.println("--------firstName "+firstName);
 			namePart += firstName.substring(0, 1);
 			namePart = namePart.toUpperCase();
 			if (!namePart.equals(healthNumber.substring(0, 4))) {
@@ -175,7 +173,6 @@ public class BabqRules {
 			String dateCode = String.format("%02d%02d%02d", calDateOfBirth
 					.get(Calendar.YEAR) % 100, monthOfBirth, calDateOfBirth
 					.get(Calendar.DAY_OF_MONTH));
-			System.out.println("--------dateCode "+dateCode);
 			if (!dateCode.equals(healthNumber.substring(4, 10))) {
 				if (!okToUseParentHealthNum)
 					warningList

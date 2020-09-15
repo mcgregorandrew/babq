@@ -11,6 +11,9 @@ import com.bronzeage.babq.common.BabqWarningList;
 import com.bronzeage.babq.processing.BabqProcessor;
 
 /**
+ * This file was used initially  during development but is not currently used.  See GuiMain.java 
+ * for the current "main" function.
+ * 
  * @author andrew
  * 
  */
@@ -37,7 +40,7 @@ public class BabqMain {
 
 					processor.doLoadData(warningList);
 				} else if (arg.equals("-lbt")) {
-					BabqConfig.setPref(BabqConfig.BILLING_TBL_FILE_NAME,
+					BabqConfig.setPref(BabqConfig.BILLING_CODE_TBL_NAME,
 							"/home/andrew/babq/testOutput/allClinics.txt");
 					processor.loadBillingTbl(warningList);
 				} else if (arg.equals("-sbt")) {

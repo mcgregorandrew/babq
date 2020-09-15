@@ -186,4 +186,32 @@ public class BabqDbPatient extends BabqDbBase {
 				+ " (FamilyDoctor)");
 
 	}
+	
+	public void dropTbl() {
+		PreparedStatement stmt = null;
+		try {
+			stmt = makePrepStmt("DROP VIEW patientWithApptView");
+			try {
+				executePrepStmt(stmt);
+			}
+			catch (SQLException e) {
+			}
+			stmt = makePrepStmt("DROP VIEW PATIENTAGERANGEVIEW");
+			try {
+				executePrepStmt(stmt);
+			}
+			catch (SQLException e) {
+			}
+
+		} catch (Throwable e) {
+		} finally {
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+				}
+		}
+		super.dropTbl();
+	}
+
 }

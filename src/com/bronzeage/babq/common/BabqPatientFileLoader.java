@@ -11,11 +11,6 @@ import java.io.IOException;
  */
 public class BabqPatientFileLoader extends BabqFileLoader {
 
-	/**
-	 * Read ahead limit to marker.
-	 */
-	private static final int READ_AHEAD_LIMIT = 2000;
-
 	public BabqPatientFileLoader(File f, IBabqProgress progressTracker,
 			boolean useTabs) throws FileNotFoundException {
 		super(f, progressTracker, useTabs);
