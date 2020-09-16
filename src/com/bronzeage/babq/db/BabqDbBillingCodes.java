@@ -13,8 +13,6 @@ import java.util.List;
 import com.bronzeage.babq.common.BabqWarningList;
 import com.bronzeage.babq.formatter.DateFormatter;
 
-import javafx.util.Pair;
-
 /**
  * This table contains the table which holds the optional table of billing codes for the appointments.
  * 
@@ -73,6 +71,24 @@ public class BabqDbBillingCodes extends BabqDbBase {
 		doUpdate("CREATE INDEX HealthNumberIndex ON " + tblName_m + "(HealthNumber)");
 	}
 
+	
+	/**
+	 * Minor working class.
+	 * 
+	 * @author andrewmcgregor
+	 *
+	 */
+	public static class DateAndHealthNumber {
+		public String apptDate_m;
+		public String healthNumber_m;
+
+		public DateAndHealthNumber(String apptDate, String healthNumber) {
+			apptDate_m = apptDate;
+			healthNumber_m = healthNumber;
+		}
+	}
+
+	
 	/**
 	 * This returns a list of records from the billing table which have more than one entry
 	 * on a given date for a given health card number.  This is used to delete duplicates
@@ -82,16 +98,16 @@ public class BabqDbBillingCodes extends BabqDbBase {
 	 * @param warnings
 	 * @return a list of appointment date and health cards which have more than one record for a date.
 	 */
-	public List<Pair<String, String>> getListOfRecordsWithMoreThanOneCodeInDay(BabqWarningList warnings) {
+	public List<DateAndHealthNumber> getListOfRecordsWithMoreThanOneCodeInDay(BabqWarningList warnings) {
 		PreparedStatement prep = null;
 		try {
 			prep = makePrepStmt("SELECT ApptDate, HealthNumber, count(*) AS c FROM " + tblName_m + " GROUP BY ApptDate, HealthNumber HAVING count(*) > 1");
 
 			
 			ResultSet rs = prep.executeQuery();
-			List<Pair<String, String>> l = new ArrayList<Pair<String, String>> ();
+			List<DateAndHealthNumber> l = new ArrayList<DateAndHealthNumber> ();
 			while (rs.next()) {
-				l.add(new Pair<String, String> (rs.getString(1), rs.getString(2)));
+				l.add(new DateAndHealthNumber (rs.getString(1), rs.getString(2)));
 			}
 			
 			return l;

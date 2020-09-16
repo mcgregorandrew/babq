@@ -37,13 +37,13 @@ import com.bronzeage.babq.common.IBabqProgress;
 import com.bronzeage.babq.db.BabqDbAppt;
 import com.bronzeage.babq.db.BabqDbBase;
 import com.bronzeage.babq.db.BabqDbBillingCodes;
+import com.bronzeage.babq.db.BabqDbBillingCodes.DateAndHealthNumber;
 import com.bronzeage.babq.db.BabqDbBillings;
 import com.bronzeage.babq.db.BabqDbNameExceptions;
 import com.bronzeage.babq.db.BabqDbPatient;
 import com.bronzeage.babq.db.BabqDbProvider;
 import com.bronzeage.babq.processing.BabqRules.BabqValErrorType;
 
-import javafx.util.Pair;
 
 /**
  * @author andrew
@@ -221,13 +221,13 @@ public class BabqProcessor implements IBabqProcessor {
 		Set<String> excludedBillingCodeSet = loadExcludedBillingCodesSet(warningList);
 		
 		// Get the list of records with more that one record for a healthnumber on a given day
-		List<Pair<String, String>> listOfDuplCodeRecs = billingCodesDb.getListOfRecordsWithMoreThanOneCodeInDay(warningList);
+		List<DateAndHealthNumber> listOfDuplCodeRecs = billingCodesDb.getListOfRecordsWithMoreThanOneCodeInDay(warningList);
 		
 		// For each of these healthnumber/apptdate, get the list of billing codes
-		for (Pair<String, String> rec: listOfDuplCodeRecs) {
+		for (DateAndHealthNumber rec: listOfDuplCodeRecs) {
 			// Read healthnumber and date
-			String apptDate = rec.getKey();
-			String healthNumber = rec.getValue();
+			String apptDate = rec.apptDate_m;
+			String healthNumber = rec.healthNumber_m;
 			// Make list of billing codes
 			List<String> billingCodesFound = billingCodesDb.getBillingCodesForDateAndHn(apptDate, healthNumber, warningList);
 			
