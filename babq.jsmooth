@@ -10,7 +10,7 @@
 <currentDirectory>${EXECUTABLEPATH}</currentDirectory>
 <embeddedJar>true</embeddedJar>
 <executableName>dist\bin\BABQ FMC Billing Tool.exe</executableName>
-<iconLocation>..\..\tools\Money4.gif</iconLocation>
+<iconLocation>src\resources\Money.png</iconLocation>
 <initialMemoryHeap>-1</initialMemoryHeap>
 <jarLocation>dist\lib\babq.jar</jarLocation>
 <mainClassName>com.bronzeage.babq.gui.GuiMain</mainClassName>
@@ -24,6 +24,7 @@
 </skeletonProperties>
 <skeletonProperties>
 <key>URL</key>
+<value></value>
 </skeletonProperties>
 <skeletonProperties>
 <key>SingleProcess</key>
