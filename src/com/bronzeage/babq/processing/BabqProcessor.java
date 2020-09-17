@@ -189,6 +189,8 @@ public class BabqProcessor implements IBabqProcessor {
 			warningList.addLog(billingCodeFile.getName(), -1, "Opened file");
 			count = 0;
 			warningList.setFile(billingCodeFile.getName());
+			
+			loader.readRecord(); // Skip first line
 			while ((strings = loader.readRecord()) != null) {
 				if (billingCodesDb_m.validateRecord(loader.getLineNumber(), strings,
 						warningList)) {
@@ -217,7 +219,7 @@ public class BabqProcessor implements IBabqProcessor {
 
 	}
 
-	private void removeDuplicateBillingCodeRecords(BabqDbBillingCodes billingCodesDb, BabqWarningList warningList) throws IOException {
+	private void removeDuplicateBillingCodeRecords(BabqDbBillingCodes billingCodesDb, BabqWarningList warningList) throws Exception {
 		Set<String> excludedBillingCodeSet = loadExcludedBillingCodesSet(warningList);
 		
 		// Get the list of records with more that one record for a healthnumber on a given day
@@ -289,7 +291,7 @@ public class BabqProcessor implements IBabqProcessor {
 	 * .babq.common.BabqWarningList)
 	 */
 	public void doMakeQbBillingTbl(BabqWarningList warningList)
-			throws SQLException {
+			throws Exception {
 
 		logger_m.info("Checking Quebec babies without health card numbers... ");
 		Collection<String> cardlessQcBabies = getQuebecBabiesWithoutNumbers();
@@ -730,14 +732,14 @@ public class BabqProcessor implements IBabqProcessor {
 
 	/**
 	 * Load file of billing codes that cannot be sent to Quebec
+	 * @throws Exception 
 	 */
-	public Set<String> loadExcludedBillingCodesSet(BabqWarningList warningList)	throws IOException {
+	public Set<String> loadExcludedBillingCodesSet(BabqWarningList warningList)	throws Exception {
 		File inFile = new File(BabqConfig
 				.getPref(BabqConfig.EXCLUDED_BILLING_CODE_FILE_NAME));
 		if (!inFile.isFile()) {
-			warningList.addWarning(-1, "File " + inFile.getAbsolutePath()
-					+ " was not found");
-			throw new IOException("File " + inFile.getAbsolutePath() + " was not found");
+			BabqUtils.copyFromResource("resources/excludedBillingCodes.csv", inFile);
+			warningList.addLog("", -1, "Made excludedBillingCodes.csv from template");
 		}
 		BabqFileLoader loader = new BabqFileLoader(inFile, progressTracker_m,
 				false);

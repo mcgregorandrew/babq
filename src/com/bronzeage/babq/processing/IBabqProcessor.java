@@ -15,7 +15,7 @@ public interface IBabqProcessor {
 			throws Exception;
 
 	public abstract void doMakeQbBillingTbl(BabqWarningList warningList)
-			throws SQLException;
+			throws Exception;
 
 	public abstract void loadBillingTbl(BabqWarningList warningList)
 			throws Exception;
