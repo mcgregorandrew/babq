@@ -25,6 +25,7 @@
     <copy file="${src}/resources/qcBillingTemplate.xls" tofile="${build}/resources/qcBillingTemplate.xls"/>
     <copy file="${src}/resources/roleSummary.xls" tofile="${build}/resources/roleSummary.xls"/>
     <copy file="${src}/resources/teamSummary.xls" tofile="${build}/resources/teamSummary.xls"/>
+    <copy file="${src}/resources/excludedBillingCodes.csv" tofile="${build}/resources/excludedBillingCodes.csv"/>
     <copy file="${src}/resources/providerSummary.xls" tofile="${build}/resources/providerSummary.xls"/>
     <copy file="${src}/resources/Money.png" tofile="${build}/resources/Money.png"/>
     <javac srcdir="${src}" destdir="${build}" debug="true">
@@ -56,11 +57,11 @@
     <unjar src="3rdParty/swing-worker-1.1.jar" dest="${build}"/>
     <jar jarfile="${dist}/lib/babq.jar" basedir="${build}"/>
 
-    <exec osfamily="windows" executable="c:\Program Files (x86)\JSmooth 0.9.9-7\jsmoothcmd.exe">
+    <exec osfamily="windows" executable="c:\Program Files\JSmooth 0.9.9-7\jsmoothcmd.exe">
       <arg value="babq.jsmooth"/>
     </exec>
     <zip destfile="${dist}/BABQ.zip" basedir="${dist}/bin"/>
-    <exec osfamily="windows" executable="c:\Program Files (x86)\JSmooth 0.9.9-7\jsmoothcmd.exe">
+    <exec osfamily="windows" executable="c:\Program Files\JSmooth 0.9.9-7\jsmoothcmd.exe">
       <arg value="babq-d.jsmooth"/>
     </exec>
     <zip destfile="${dist}/BABQ-d.zip" basedir="${dist}/bin"/>
