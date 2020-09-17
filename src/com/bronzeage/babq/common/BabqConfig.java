@@ -84,6 +84,7 @@ public class BabqConfig {
 		settablePrefs_ms.add(JDBC_URI);
 		settablePrefs_ms.add(AUTO_CLEAR_DATA);
 		settablePrefs_ms.add(EXC_NAME_FILE_NAME);
+		settablePrefs_ms.add(EXCLUDED_BILLING_CODE_FILE_NAME);
 
 	}
 

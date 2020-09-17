@@ -3,15 +3,11 @@
  */
 package com.bronzeage.babq.processing;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URL;
-import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -19,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,7 +29,6 @@ import com.bronzeage.babq.common.BabqFileLoader;
 import com.bronzeage.babq.common.BabqPatientFileLoader;
 import com.bronzeage.babq.common.BabqUtils;
 import com.bronzeage.babq.common.BabqWarningList;
-import com.bronzeage.babq.common.BabqZip;
 import com.bronzeage.babq.common.IBabqProgress;
 import com.bronzeage.babq.db.BabqDbAppt;
 import com.bronzeage.babq.db.BabqDbBase;
@@ -150,19 +146,28 @@ public class BabqProcessor implements IBabqProcessor {
 		patientDb_m.createTbl();
 
 		logger_m.fine("Processing patient file " + patientFile);
+		long start = System.currentTimeMillis();
 		warningList.addLog(patientFileNameString, -1, "Opened file");
 		count = 0;
 		warningList.setFile(patientFileNameString);
 		loader = new BabqPatientFileLoader(patientFile, progressTracker_m, true);
 		//strings = loader.readRecord(); // skip header
+		List<String[]> l = new ArrayList<String[]> ();
 		while ((strings = loader.readRecord()) != null) {
-			patientDb_m.addRecord(patientFileNameString,
-					loader.getLineNumber(), strings, warningList);
+			l.add(strings);
 			count++;
+			if (l.size() > 100){ 
+				patientDb_m.addRecords(patientFileNameString, loader.getLineNumber(), l, warningList);
+				l.clear();
+			}
+		}
+		if (l.size() > 0){ 
+			patientDb_m.addRecords(patientFileNameString, loader.getLineNumber(), l, warningList);
 		}
 		loader.close();
 		warningList.addLog(patientFileNameString, -1, "Read " + count
 				+ " records");
+		logger_m.warning("XXX DONE Processing patient file " + patientFile + " In " + (System.currentTimeMillis() - start));
 
 		providerDb_m.createTbl();
 		loader = new BabqFileLoader(providerFile, progressTracker_m, false);
@@ -1601,58 +1606,6 @@ public class BabqProcessor implements IBabqProcessor {
 
 	public String getInitError() {
 		return initError_m;
-	}
-
-	public void sendForSupport(BabqWarningList warningList_m)
-			throws IOException {
-		String home = System.getProperty("user.home");
-		File zip = new File(home, "babqSupport.zip");
-		zip.delete();
-
-		progressTracker_m
-				.setProgressString("Combining files (may take a few minutes)...");
-		String dirToZip = new File(BabqConfig
-				.getPref(BabqConfig.OUTPUT_DIR_ROOT)).getParentFile()
-				.getAbsolutePath();
-		dirToZip = "/home/andrew/test";
-		new File(dirToZip).delete();
-		BabqZip.zipDirToFile(dirToZip, zip.getAbsolutePath());
-		String fileName = "upload" + System.currentTimeMillis() + ".zip";
-		progressTracker_m.setProgressString("Transferring file as " + fileName
-				+ " (may take a few minutes)...");
-		// Transfer to bronzeagesoftware.com
-		// The URL of the file you want to get (note how you pass the username
-		// and password in an FTP URL)
-		URL url = new URL(
-				"ftp://babqUpload:jkhsdjbnsdf@bronzeagesoftware.com/babqLogFiles/"
-						+ fileName);
-
-		// Open a connection
-		URLConnection conn = url.openConnection();
-
-		// Read from the connection
-
-		BufferedInputStream in = new BufferedInputStream(new FileInputStream(
-				zip));
-		BufferedOutputStream out = new BufferedOutputStream(conn
-				.getOutputStream());
-
-		byte buf[] = new byte[10240];
-		int numBytes;
-		int xfer = 0;
-		int maxK = (int) (zip.length() >> 10);
-		while ((numBytes = in.read(buf)) >= 0) {
-			progressTracker_m.setProgressString("Transferred " + 10 * (xfer++)
-					+ " K bytes of " + maxK + " K bytes");
-			out.write(buf, 0, numBytes);
-		}
-		in.close();
-		out.close();
-
-		progressTracker_m.setProgressString("Transferring complete.");
-		// Delete file if transfer OK
-		// zip.delete();
-
 	}
 
 	private void makeBillingReport(Map<String, Integer> deletedDupCounts,

@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.bronzeage.babq.common.BabqUtils;
 import com.bronzeage.babq.common.BabqWarningList;
@@ -22,103 +24,98 @@ public class BabqDbPatient extends BabqDbBase {
 		super("patientTbl", conn);
 	}
 
-	public void addRecord(String source, int lineNumber, String tokens[],
+	public void addRecords(String source, int lineNumber, List<String[]> lines,
 			BabqWarningList warningList) {
 		
 		PreparedStatement prep = null;
+		List<String> buf = new ArrayList<String> ();
+		for (int i = 0; i < lines.size(); i++) {
+			buf.add("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		}
+		String cmd = "INSERT INTO  " + tblName_m + " VALUES " + String.join(",", buf);
+		
 		try {
-			prep = makePrepStmt("INSERT INTO  " + tblName_m
-					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-			prep.setInt(1, Integer.parseInt(tokens[0])); // pt num
-			setString(prep, 2, tokens[1]); // surname
-			setString(prep, 3, tokens[4]); // first name
-			
-			//Changed in version 5.0
-			//Changed in version 6.0
-			setString(prep, 4, tokens[69]); // health card province
-			
-			/**
-			 * @Since version 3.1. Address address to clinic output data
-			 */
-			setString(prep, 5, tokens[8]); // mailing address line 1
-			setString(prep, 6, tokens[9]); // mailing address line 2
-			setString(prep, 7, tokens[12]); // mailing city
-			setString(prep, 8, tokens[13]); // mailing province
-			setString(prep, 9, tokens[14]); // mailing country
-			setString(prep, 10, tokens[15]); // mailing postal code
-			
-			/**
-			 * @Since version 3.1. Address address to clinic output data
-			 */
-			setString(prep, 11, tokens[20]); // residential address line 1
-			setString(prep, 12, tokens[21]); // residential address line 2
-			setString(prep, 13, tokens[24]); // residential city
-			setString(prep, 14, tokens[25]); // residential province
-			setString(prep, 15, tokens[26]); // residential country
-			setString(prep, 16, tokens[27]); // residential postal code
-			
-			prep.setDate(17, DateFormatter.stringToDate(tokens[31])); // Birth Date
-			setString(prep, 18, tokens[32]); //Sex
-			
-			//Changed in version 5.0
-			//Changed in version 6.0
-			setString(prep, 19, tokens[70]); // Health Card Number
-			setString(prep, 20, tokens[72]); // Health Card Version Code
-			Date expiryDate = DateFormatter.stringToDate(tokens[74]); // Card Expire Date
-			prep.setDate(21, expiryDate);
-			if ((expiryDate == null)
-					|| (BabqUtils.isLastDayOfMonth(expiryDate.getTime()))) {
-				prep.setDate(22, expiryDate);
-			} else {
-				prep.setDate(22, new Date(BabqUtils
-						.getDateAtLastDayOfMonth(expiryDate.getTime())));
+			prep = makePrepStmt(cmd);
+			int offset = 0;
+			for (String tokens[]: lines) {
+				prep.setInt(1+offset, Integer.parseInt(tokens[0])); // pt num
+				setString(prep, 2+offset, tokens[1]); // surname
+				setString(prep, 3+offset, tokens[4]); // first name
+				
+				//Changed in version 5.0
+				//Changed in version 6.0
+				setString(prep, 4+offset, tokens[69]); // health card province
+				
+				/**
+				 * @Since version 3.1. Address address to clinic output data
+				 */
+				setString(prep, 5+offset, tokens[8]); // mailing address line 1
+				setString(prep, 6+offset, tokens[9]); // mailing address line 2
+				setString(prep, 7+offset, tokens[12]); // mailing city
+				setString(prep, 8+offset, tokens[13]); // mailing province
+				setString(prep, 9+offset, tokens[14]); // mailing country
+				setString(prep, 10+offset, tokens[15]); // mailing postal code
+				
+				/**
+				 * @Since version 3.1. Address address to clinic output data
+				 */
+				setString(prep, 11+offset, tokens[20]); // residential address line 1
+				setString(prep, 12+offset, tokens[21]); // residential address line 2
+				setString(prep, 13+offset, tokens[24]); // residential city
+				setString(prep, 14+offset, tokens[25]); // residential province
+				setString(prep, 15+offset, tokens[26]); // residential country
+				setString(prep, 16+offset, tokens[27]); // residential postal code
+				
+				prep.setDate(17+offset, DateFormatter.stringToDate(tokens[31])); // Birth Date
+				setString(prep, 18+offset, tokens[32]); //Sex
+				
+				//Changed in version 5.0
+				//Changed in version 6.0
+				setString(prep, 19+offset, tokens[70]); // Health Card Number
+				setString(prep, 20+offset, tokens[72]); // Health Card Version Code
+				Date expiryDate = DateFormatter.stringToDate(tokens[74]); // Card Expire Date
+				prep.setDate(21+offset, expiryDate);
+				if ((expiryDate == null)
+						|| (BabqUtils.isLastDayOfMonth(expiryDate.getTime()))) {
+					prep.setDate(22+offset, expiryDate);
+				} else {
+					prep.setDate(22+offset, new Date(BabqUtils
+							.getDateAtLastDayOfMonth(expiryDate.getTime())));
+				}
+	
+				//Changed in version 5.0
+				String familyMd = tokens[52]; // Family Doctor
+				try {
+					prep.setInt(23+offset, Integer.parseInt(familyMd));
+				} catch (NumberFormatException e) {
+					if (familyMd.trim().length() != 0)
+						warningList
+								.addWarning(
+										lineNumber,
+										"Error in FamilyMD number (found "
+												+ familyMd
+												+ ") - may need to re-export with references");
+					prep.setObject(23+offset, null);
+				}
+				
+				prep.setString(24+offset, tokens[57]); // Doc Num
+	
+				setString(prep, 25+offset, tokens[33]); // mDeleted
+				
+				//Changed in version 6.0
+				setString(prep, 26+offset, tokens[79]); // mMember status
+				prep.setString(27+offset, source);
+				prep.setInt(28+offset, lineNumber);
+				offset += 28;
+				//System.out.println("Patient number: "+tokens[0]+" patient name: "+ tokens[4]+" "+tokens[1]+" memberStatus: "+tokens[78]);
+				
+	//			logger_m.info("PatientNum Surname FirstName Province MailProvince DateOfBirth Sex HealthNumber HNVersionCode DateOfCardExpiry DateOfCardExpiryCor " +
+	//					"FamilyDoctor PatientDoctor ActiveStatus MemberStatus SourceFile SourceLineNumber \n" +
+	//					tokens[0]+" // " + tokens[1]+" // " + tokens[4]+" // " + tokens[65]+" // "
+	//					+ tokens[13]+" // " + tokens[31]+" // " + tokens[32]+" // " + tokens[66] +" // "
+	//			        + tokens[68]+" // " + tokens[70]+" // " + tokens[70]+" // " + tokens[49]+" // "
+	//			        + tokens[54]+" // " + tokens[33]+" // " + tokens[75]+" // " +source+" // " + lineNumber);
 			}
-
-			//Changed in version 5.0
-			String familyMd = tokens[52]; // Family Doctor
-			try {
-				prep.setInt(23, Integer.parseInt(familyMd));
-			} catch (NumberFormatException e) {
-				if (familyMd.trim().length() != 0)
-					warningList
-							.addWarning(
-									lineNumber,
-									"Error in FamilyMD number (found "
-											+ familyMd
-											+ ") - may need to re-export with references");
-				prep.setObject(23, null);
-			}
-			
-			prep.setString(24, tokens[57]); // Doc Num
-//			try {
-//				prep.setInt(13, Integer.parseInt(docNum));
-//			} catch (NumberFormatException e) {
-//				if (docNum.trim().length() != 0)
-//					warningList
-//							.addWarning(
-//									lineNumber,
-//									"Error in docNum (found "
-//											+ docNum
-//											+ ") - may need to reexport with references");
-//				prep.setObject(13, null);
-//			}
-
-			setString(prep, 25, tokens[33]); // mDeleted
-			
-			//Changed in version 6.0
-			setString(prep, 26, tokens[79]); // mMember status
-			prep.setString(27, source);
-			prep.setInt(28, lineNumber);
-			
-			//System.out.println("Patient number: "+tokens[0]+" patient name: "+ tokens[4]+" "+tokens[1]+" memberStatus: "+tokens[78]);
-			
-//			logger_m.info("PatientNum Surname FirstName Province MailProvince DateOfBirth Sex HealthNumber HNVersionCode DateOfCardExpiry DateOfCardExpiryCor " +
-//					"FamilyDoctor PatientDoctor ActiveStatus MemberStatus SourceFile SourceLineNumber \n" +
-//					tokens[0]+" // " + tokens[1]+" // " + tokens[4]+" // " + tokens[65]+" // "
-//					+ tokens[13]+" // " + tokens[31]+" // " + tokens[32]+" // " + tokens[66] +" // "
-//			        + tokens[68]+" // " + tokens[70]+" // " + tokens[70]+" // " + tokens[49]+" // "
-//			        + tokens[54]+" // " + tokens[33]+" // " + tokens[75]+" // " +source+" // " + lineNumber);
-
 			prep.execute();
 		} catch (Throwable e) {
 			warningList.addWarning(lineNumber, e.toString());

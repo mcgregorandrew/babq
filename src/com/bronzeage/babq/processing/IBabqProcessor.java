@@ -53,9 +53,6 @@ public interface IBabqProcessor {
 
 	public abstract String getInitError();
 
-	public abstract void sendForSupport(BabqWarningList warningList_m)
-			throws IOException;
-
 	public abstract void setInitError(String string);
 
 	void checkQuebecBabiesWithoutNumbers(Collection<String> cardlessQcBabies,

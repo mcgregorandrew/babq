@@ -179,12 +179,6 @@ public class BabqTestProcessor implements IBabqProcessor
 		return null;
 	}
 
-	public void sendForSupport(BabqWarningList warningList_m) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 	public void setInitError(String string) {
 		// TODO Auto-generated method stub
 		

@@ -52,7 +52,7 @@ import com.bronzeage.babq.processing.IBabqProcessor;
  */
 public class MainWindow extends JFrame {
 	enum ActionType {
-		CLEAR_DB, LOAD_PAPT, MERGE, LOAD_BILLING, SAVE_BILLING, VALIDATE, CHANGE_SETTINGS, EDIT_EXCEPTIONS, SAVE_COMBO_TBL, CREATE_BILLING_SHEETS, GEN_TEAM_REPORTS, SEND_FOR_SUPPORT
+		CLEAR_DB, LOAD_PAPT, MERGE, LOAD_BILLING, SAVE_BILLING, VALIDATE, CHANGE_SETTINGS, EDIT_EXCEPTIONS, SAVE_COMBO_TBL, CREATE_BILLING_SHEETS, GEN_TEAM_REPORTS
 	}
 
 	private void openInExplorer(File f) throws IOException {
@@ -491,14 +491,6 @@ public class MainWindow extends JFrame {
 
 			buttonList.add(button);
 
-			button = new JButton("Send Data For Support");
-			button.addActionListener(new ActionListener() {
-				public void actionPerformed(final ActionEvent e) {
-					doAction(ActionType.SEND_FOR_SUPPORT);
-				}
-			});
-			buttonList.add(button);
-
 		}
 
 		int i = 0;
@@ -566,10 +558,6 @@ public class MainWindow extends JFrame {
 					case GEN_TEAM_REPORTS:
 						log("Generating team reports...");
 						processor_m.generateTeamReports(warningList_m);
-						break;
-					case SEND_FOR_SUPPORT:
-						log("Sending data for support...");
-						processor_m.sendForSupport(warningList_m);
 						break;
 					}
 				} catch (final Throwable e1) {
