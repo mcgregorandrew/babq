@@ -156,7 +156,7 @@ public class BabqProcessor implements IBabqProcessor {
 		while ((strings = loader.readRecord()) != null) {
 			l.add(strings);
 			count++;
-			if (l.size() > 100){ 
+			if (l.size() > 100) { 
 				patientDb_m.addRecords(patientFileNameString, loader.getLineNumber(), l, warningList);
 				l.clear();
 			}
@@ -167,7 +167,7 @@ public class BabqProcessor implements IBabqProcessor {
 		loader.close();
 		warningList.addLog(patientFileNameString, -1, "Read " + count
 				+ " records");
-		logger_m.warning("XXX DONE Processing patient file " + patientFile + " In " + (System.currentTimeMillis() - start));
+		logger_m.info("Loaded patient file " + patientFile + " in " + (System.currentTimeMillis() - start) + " ms");
 
 		providerDb_m.createTbl();
 		loader = new BabqFileLoader(providerFile, progressTracker_m, false);
@@ -211,7 +211,7 @@ public class BabqProcessor implements IBabqProcessor {
 			
 			// If there are multiple codes for a given patient and date we need to 
 			// reduce this to 1 but preferentially dropping the excluded codes.
-			removeDuplicateBillingCodeRecords(billingCodesDb_m, warningList);
+			removeDuplicateBillingCodeRecords(billingCodesDb_m, billingCodeFile, warningList);
 			
 		} else {
 			warningList.addLog(billingCodeFile.getName(), -1, "No billing code file loaded");
@@ -224,7 +224,7 @@ public class BabqProcessor implements IBabqProcessor {
 
 	}
 
-	private void removeDuplicateBillingCodeRecords(BabqDbBillingCodes billingCodesDb, BabqWarningList warningList) throws Exception {
+	private void removeDuplicateBillingCodeRecords(BabqDbBillingCodes billingCodesDb, File billingCodeFile, BabqWarningList warningList) throws Exception {
 		Set<String> excludedBillingCodeSet = loadExcludedBillingCodesSet(warningList);
 		
 		// Get the list of records with more that one record for a healthnumber on a given day
@@ -260,6 +260,7 @@ public class BabqProcessor implements IBabqProcessor {
 			billingCodesFound.remove(codeToKeep);
 			billingCodesDb.deleteMatchingRecords(apptDate, healthNumber, billingCodesFound, warningList);
 		}
+		warningList.addLog(billingCodeFile.getName(), -1, "Deleted duplicate codes for " + listOfDuplCodeRecs.size() + " health number/date combinations");
 	}
 
 	public void loadNameExcTbl(BabqWarningList warningList) throws Exception {
@@ -282,7 +283,7 @@ public class BabqProcessor implements IBabqProcessor {
 					count++;
 				}
 			}
-			warningList.addLog(excFile.getName(), -1, "Billing exclusion file: read " + count
+			warningList.addLog(excFile.getName(), -1, "Name exception file: read " + count
 					+ " records");
 
 		}
@@ -455,6 +456,11 @@ public class BabqProcessor implements IBabqProcessor {
 			stmt2.close();
 		}
 		
+		// Count the number of records without a billing code.  State as percentage
+		long nullCount = billingDb_m.getCountOfRecords("WHERE billingcode IS NULL ");
+		long totalCount = billingDb_m.getCountOfRecords("");
+		warningList.addLog("", -1, "Records without billing codes are " + nullCount + " of " + totalCount + " records");
+
 		// Remove the records with excluded billing codes
 		try {
 			Set<String> excludedBillingCodeSet = loadExcludedBillingCodesSet(warningList);

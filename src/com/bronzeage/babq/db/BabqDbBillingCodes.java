@@ -39,7 +39,7 @@ public class BabqDbBillingCodes extends BabqDbBase {
 		try {
 			prep = makePrepStmt("INSERT INTO  " + tblName_m
 					+ " VALUES (?, ?, ?)");
-			prep.setDate(1, DateFormatter.stringToDate(tokens[2]));
+			prep.setDate(1, DateFormatter.stringToDate(tokens[21]));
 			String healthNumber = tokens[7].substring(2);  // Remove the QC or ON prefix that NetMedical puts on the health numbers in this file
 			prep.setString(2, healthNumber);
 			prep.setString(3, tokens[22]);
@@ -101,7 +101,7 @@ public class BabqDbBillingCodes extends BabqDbBase {
 	public List<DateAndHealthNumber> getListOfRecordsWithMoreThanOneCodeInDay(BabqWarningList warnings) {
 		PreparedStatement prep = null;
 		try {
-			prep = makePrepStmt("SELECT ApptDate, HealthNumber, count(*) AS c FROM " + tblName_m + " GROUP BY ApptDate, HealthNumber HAVING count(*) > 1");
+			prep = makePrepStmt("SELECT ApptDate, HealthNumber, count(*) AS c FROM " + tblName_m + " GROUP BY ApptDate, HealthNumber HAVING c > 1");
 
 			
 			ResultSet rs = prep.executeQuery();
@@ -133,7 +133,7 @@ public class BabqDbBillingCodes extends BabqDbBase {
 		PreparedStatement prep = null;
 		try {
 			prep = makePrepStmt("DELETE FROM  " + tblName_m
-					+ " WHERE  ApptDate = ? AND HealthNumber = ? AND BillingCode NOT IN ('" + String.join("','", billingCodesToDelete) + "')");
+					+ " WHERE  ApptDate = ? AND HealthNumber = ? AND BillingCode IN ('" + String.join("','", billingCodesToDelete) + "')");
 			prep.setString(1, apptDate);
 			prep.setString(2, healthNumber);
 			

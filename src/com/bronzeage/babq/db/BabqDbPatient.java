@@ -86,9 +86,12 @@ public class BabqDbPatient extends BabqDbBase {
 				//Changed in version 5.0
 				String familyMd = tokens[52]; // Family Doctor
 				try {
-					prep.setInt(++offset, Integer.parseInt(familyMd));
-				} catch (NumberFormatException e) {
 					if (familyMd.trim().length() != 0)
+						prep.setInt(++offset, Integer.parseInt(familyMd));
+					else
+						prep.setObject(++offset, null);
+
+				} catch (NumberFormatException e) {
 						warningList
 								.addWarning(
 										lineNumber,

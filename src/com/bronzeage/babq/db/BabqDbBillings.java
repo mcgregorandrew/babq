@@ -105,21 +105,28 @@ public class BabqDbBillings extends BabqDbBase {
 		PrintWriter pw = new PrintWriter(os);
 		int count = 0;
 
-		pw.printf("\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"%n", "HealthNumber",
+		pw.printf("\"%s\"," + 
+				"\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"," + 
+				"\"%s\",\"%s\",\"%s\",\"%s\"," + 
+				"\"%s\",\"%s\",\"%s\"%n", 
+				"HealthNumber",
 				"ExpiryDate", "Surname", "FirstName", "DateOfBirth", "Sex",
-				"DateOfService", "Site", "UsingParentHealthNum", "HealthCardProvince", "MailingAddress", "ResidentialAddress");
+				"DateOfService", "Site", "UsingParentHealthNum", "HealthCardProvince", 
+				"MailingAddress", "ResidentialAddress", "BillingCode");
 		while (rs.next()) {
-			pw.printf("\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"%n", //
+			pw.printf("\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"," + //
+					"\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"," + //
+					"\"%s\",\"%s\",\"%s\"%n", //
 					rs.getString("HealthNumber"), //
 					rs.getDate("DateOfCardExpiry"), //
 					rs.getString("Surname"), //
 					rs.getString("FirstName"), //
-					rs.getDate("DateOfBirth"), //
+					rs.getDate("DateOfBirth"), // 5
 					rs.getString("Sex"), //
 					rs.getDate("DateOfService"), //
 					rs.getString("Site"), // 
 					rs.getString("UsingParentHealthNum"), // 
-					rs.getString("HealthCardProvince"), //
+					rs.getString("HealthCardProvince"), // 10
 					rs.getString("MailingAddress"), //
 					rs.getString("ResAddress"), //
 					rs.getString("BillingCode") //
@@ -160,5 +167,11 @@ public class BabqDbBillings extends BabqDbBase {
 				+ ")");
 		doUpdate("CREATE INDEX HealthNumIndex ON " + tblName_m
 				+ " (HealthNumber)");
+	}
+
+	public long getCountOfRecords(String conditionString) throws SQLException {
+		ResultSet rs = doQuery("SELECT count(*) FROM " + tblName_m + " " + conditionString);
+		rs.next();
+		return rs.getLong(1);
 	}
 }
