@@ -91,9 +91,15 @@ public class BabqBillingSpreadsheet {
 
 		HSSFRow r = currentSheet_m.getRow(currentRecordInSheetCounter_m
 				+ FIRST_ROW_TO_FILL_IN);
-		String healthCardNumWithSpaces = healthCardNum.substring(0, 4) + " "
+		String healthCardNumWithSpaces;
+		try {
+			healthCardNumWithSpaces = healthCardNum.substring(0, 4) + " "
 				+ healthCardNum.substring(4, 8) + " "
 				+ healthCardNum.substring(8, 12);
+		} catch (StringIndexOutOfBoundsException e) {
+			// Covers non Quebec health numbers
+			healthCardNumWithSpaces = healthCardNum;
+		}
 		r.getCell((short) 1).setCellValue(
 				new HSSFRichTextString(healthCardNumWithSpaces));
 		r.getCell((short) 2).setCellValue(expDate);
