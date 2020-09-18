@@ -238,19 +238,19 @@ public class BabqProcessor implements IBabqProcessor {
 			// Make list of billing codes
 			List<String> billingCodesFound = billingCodesDb.getBillingCodesForDateAndHn(apptDate, healthNumber, warningList);
 			
-			String firstOk = null;
+			String firstExcluded = null;
 			for (String billingCode: billingCodesFound) {
-				if (!excludedBillingCodeSet.contains(billingCode)) {
-					if (firstOk == null) {
-						firstOk = billingCode;
+				if (excludedBillingCodeSet.contains(billingCode)) {
+					if (firstExcluded == null) {
+						firstExcluded = billingCode;
 					}
 				}
 			}
 			
 			String codeToKeep;
-			if (firstOk != null) {
-				// If there is a non-excluded billing code, keep that, delete all others
-				codeToKeep = firstOk;
+			if (firstExcluded != null) {
+				// If there is an excluded billing code, keep that, delete all others
+				codeToKeep = firstExcluded;
 			} else {
 				// If there is only excluded billing codes, keep the first and delete the others
 				codeToKeep = billingCodesFound.get(0);
@@ -408,6 +408,7 @@ public class BabqProcessor implements IBabqProcessor {
 					String mailingAddress = rs.getString("MailAddrLine1")+", "+rs.getString("MailAddrLine2")
 											+rs.getString("MailCity")+", "+rs.getString("MailProvince")+", "
 											+rs.getString("MailCountry")+", "+rs.getString("MailPostal");
+					mailingAddress = mailingAddress.replace(",", " ");
 					
 					/**
 					 * @Since version 3.1. Address address to clinic output data
@@ -415,6 +416,7 @@ public class BabqProcessor implements IBabqProcessor {
 					String resAddress = rs.getString("ResAddrLine1")+", "+rs.getString("ResAddrLine2")
 											+rs.getString("ResCity")+", "+rs.getString("ResProvince")+", "
 											+rs.getString("ResCountry")+", "+rs.getString("ResPostal");
+					resAddress = resAddress.replace(",", " ");
 
 					boolean expiryDateOk = BabqRules.validateExpiryDate(
 							sourceFile, lineNumber, dateOfExpiry,
@@ -461,24 +463,6 @@ public class BabqProcessor implements IBabqProcessor {
 		long totalCount = billingDb_m.getCountOfRecords("");
 		warningList.addLog("", -1, "Records without billing codes are " + nullCount + " of " + totalCount + " records");
 
-		// Remove the records with excluded billing codes
-		try {
-			Set<String> excludedBillingCodeSet = loadExcludedBillingCodesSet(warningList);
-			if (!excludedBillingCodeSet.isEmpty()) {
-				stmt2 = conn_m.createStatement();
-				try {
-					int numRec = stmt2.executeUpdate("DELETE FROM " + billingDb_m.getTblName() + " WHERE " + "  billingCode IN ('"
-							+ String.join("','", excludedBillingCodeSet) + "')");
-					warningList.addLog("", -1, "Billing tbl removed " + numRec + " records because the billing codes for these visits are not allowed");
-
-				} finally {
-					stmt2.close();
-				}
-			}
-		} catch (IOException e) {
-			warningList.addWarning("", -1, "Error loading list of excluded billing codes: " + e);
-			return;
-		}
 		warningList.addLog("", -1, "Billing tbl contains " + count + " records");
 
 	}
@@ -588,13 +572,14 @@ public class BabqProcessor implements IBabqProcessor {
 				String mailingAddress = rs.getString("MailAddrLine1")+", "+rs.getString("MailAddrLine2")
 										+rs.getString("MailCity")+", "+rs.getString("MailProvince")+", "
 										+rs.getString("MailCountry")+", "+rs.getString("MailPostal");
-				
+				mailingAddress = mailingAddress.replace(",", " ");  //  Remove commas because they mess up CSV files
 				/**
 				 * @Since version 3.1. Address address to clinic output data
 				 */
 				String resAddress = rs.getString("ResAddrLine1")+", "+rs.getString("ResAddrLine2")
 										+rs.getString("ResCity")+", "+rs.getString("ResProvince")+", "
 										+rs.getString("ResCountry")+", "+rs.getString("ResPostal");
+				resAddress = resAddress.replace(",", " ");  //  Remove commas because they mess up CSV files
 				String billingCode = rs.getString("billingCodeTbl.BillingCode");
 
 				logger_m.warning("Added QC baby record for "
@@ -834,13 +819,15 @@ public class BabqProcessor implements IBabqProcessor {
 			String mailingAddress = rs.getString("MailAddrLine1")+", "+rs.getString("MailAddrLine2")
 									+rs.getString("MailCity")+", "+rs.getString("MailProvince")+", "
 									+rs.getString("MailCountry")+", "+rs.getString("MailPostal");
-			
+			mailingAddress = mailingAddress.replace(",", " ");  //  Remove commas because they mess up CSV files
+
 			/**
 			 * @Since version 3.1. Address address to clinic output data
 			 */
 			String resAddress = rs.getString("ResAddrLine1")+", "+rs.getString("ResAddrLine2")
 									+rs.getString("ResCity")+", "+rs.getString("ResProvince")+", "
 									+rs.getString("ResCountry")+", "+rs.getString("ResPostal");
+			resAddress = resAddress.replace(",", " ");  //  Remove commas because they mess up CSV files
 			
 			if (BabqRules.validateBasicFields(sourceFile, lineNumber,
 					healthCard, surname, firstName, province, sex, dateOfBirth,
@@ -918,54 +905,72 @@ public class BabqProcessor implements IBabqProcessor {
 
 		warningList.setFile("");
 
+		Set<String> excludedBillingCodesSet = loadExcludedBillingCodesSet(warningList);
+		
 		Statement stmt = conn_m.createStatement();
 		ResultSet rs = stmt
-				.executeQuery("SELECT  * from billingTbl ORDER BY HealthNumber, DateOfService, DateOfBirth, FirstName");
+				.executeQuery("SELECT  * from billingTbl ORDER BY HealthNumber, DateOfService, DateOfBirth, FirstName, BillingCode");
 		String prevPersonalId = "";
 		Date prevDateOfService = new Date(0);
 		int dupCount = 0;
 		int count = 0;
+		long billingRecordCount = billingCodesDb_m.getCountOfRecords("");
+		
 		Map<String, Integer> deletedDupCounts = new HashMap<String, Integer>();
 		while (rs.next()) {
+			String billingCode = rs.getString("BillingCode");
 			String healthNum = rs.getString("HealthNumber");
 			Date dateOfService = rs.getDate("DateOfService");
 
-			// Originally we looked for duplicates by checking the same
-			// health number on the same day, but there was a problem with
-			// a baby and a mother on the same day being declared a duplicate.
-			// To fix this, we make this "personalId" string with the name,
-			// date of birth and health number. This should even cover twins
-			// (same DoB!) where one is named after the mother (same name)!
-
-			String personalId = rs.getString("Surname") + "-"
-					+ rs.getString("FirstName") + "-"
-					+ rs.getDate("DateOfBirth") + "-"
-					+ rs.getString("HealthNumber");
-			String site = rs.getString("Site");
-			if ((prevPersonalId.equals(personalId))
-					&& (prevDateOfService.compareTo(dateOfService) == 0)) {
-				{
-					dupCount++;
-					warningList.addLog("", -1, "Duplicate record "
-							+ String.format("%03d", dupCount) + " for "
-							+ healthNum + " on " + dateOfService
-							+ " not written");
-					if (deletedDupCounts.get(site) == null)
-						deletedDupCounts.put(site, 0);
-					deletedDupCounts.put(site, deletedDupCounts.get(site) + 1);
-				}
-			} else {
-				spreadsheet.addRecord(healthNum,
-						rs.getDate("DateOfCardExpiry"),
-						rs.getString("surname"), rs.getString("firstName"), rs
-								.getDate("DateOfBirth"), rs.getString("sex"),
-						dateOfService, BabqConfig.getCostOfService(), rs
-								.getString("UsingParentHealthNum").equals("T"));
-				count++;
+			if ((billingCode == null) && (billingRecordCount != 0)) {
+				// billing code is null and we have a list of billing codes
+				warningList.addLog("", -1, "Appointment on  "
+						+ dateOfService + " for "
+						+ healthNum + " excluded because of billing code is unset");
 			}
-
-			prevPersonalId = personalId;
-			prevDateOfService = dateOfService;
+			else if (excludedBillingCodesSet.contains(billingCode)) {
+				warningList.addLog("", -1, "Appointment on  "
+						+ dateOfService + " for "
+						+ healthNum + " excluded because of billing code " + billingCode);
+			}
+			else {
+				// Originally we looked for duplicates by checking the same
+				// health number on the same day, but there was a problem with
+				// a baby and a mother on the same day being declared a duplicate.
+				// To fix this, we make this "personalId" string with the name,
+				// date of birth and health number. This should even cover twins
+				// (same DoB!) where one is named after the mother (same name)!
+	
+				String personalId = rs.getString("Surname") + "-"
+						+ rs.getString("FirstName") + "-"
+						+ rs.getDate("DateOfBirth") + "-"
+						+ rs.getString("HealthNumber");
+				String site = rs.getString("Site");
+				if ((prevPersonalId.equals(personalId))
+						&& (prevDateOfService.compareTo(dateOfService) == 0)) {
+					{
+						dupCount++;
+						warningList.addLog("", -1, "Duplicate record "
+								+ String.format("%03d", dupCount) + " for "
+								+ healthNum + " on " + dateOfService
+								+ " not written");
+						if (deletedDupCounts.get(site) == null)
+							deletedDupCounts.put(site, 0);
+						deletedDupCounts.put(site, deletedDupCounts.get(site) + 1);
+					}
+				} else {
+					spreadsheet.addRecord(healthNum,
+							rs.getDate("DateOfCardExpiry"),
+							rs.getString("surname"), rs.getString("firstName"), rs
+									.getDate("DateOfBirth"), rs.getString("sex"),
+							dateOfService, BabqConfig.getCostOfService(), rs
+									.getString("UsingParentHealthNum").equals("T"));
+					count++;
+				}
+	
+				prevPersonalId = personalId;
+				prevDateOfService = dateOfService;
+			}
 		}
 		spreadsheet.touchUpCurrentSheetAfterDataInput();
 		

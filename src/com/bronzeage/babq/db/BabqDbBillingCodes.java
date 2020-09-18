@@ -175,4 +175,11 @@ public class BabqDbBillingCodes extends BabqDbBase {
 		}
 		return billingCodeList;
 	}
+	
+	public long getCountOfRecords(String conditionString) throws SQLException {
+		ResultSet rs = doQuery("SELECT count(*) FROM " + tblName_m + " " + conditionString);
+		rs.next();
+		return rs.getLong(1);
+	}
+
 }

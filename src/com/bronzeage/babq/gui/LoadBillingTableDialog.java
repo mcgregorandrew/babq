@@ -38,7 +38,7 @@ public class LoadBillingTableDialog extends BaseDialog
     {
         super(mainWindow, "Load Billing Table", "Load", new GridBagLayout());
 
-        billingTableFileName_m = new JTextField(BabqConfig.getPref(BabqConfig.BILLING_CODE_TBL_NAME), 40);
+        billingTableFileName_m = new JTextField(BabqConfig.getPref(BabqConfig.BILLING_TBL_NAME), 40);
 
         JButton outputFolderButton = new JButton("Browse");
         outputFolderButton.addActionListener(new ActionListener()
@@ -75,13 +75,12 @@ public class LoadBillingTableDialog extends BaseDialog
     @Override
     protected void accept()
     {
-        BabqConfig.setPref(BabqConfig.BILLING_CODE_TBL_NAME,
+        BabqConfig.setPref(BabqConfig.BILLING_TBL_NAME,
                 billingTableFileName_m.getText());
     }
 
     @Override
     protected void cancel()
     {
-    // TODO
     }
 }

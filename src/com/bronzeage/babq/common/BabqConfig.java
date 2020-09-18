@@ -30,6 +30,7 @@ public class BabqConfig {
 	// Set in dialogs
 	public static final String PATIENT_TBL_NAME = "patientTblFileName";
 	public static final String PROVIDER_TBL_NAME = "providerTblFileName";
+	public static final String BILLING_TBL_NAME = "billingTblFileName";
 	public static final String BILLING_CODE_TBL_NAME = "billingCodeTblFileName";
 	public static final String APPT_TBL_NAME = "apptTblFileName";
 	public static final String SERVICE_PRICE = "servicePrice";
@@ -75,7 +76,7 @@ public class BabqConfig {
 		settablePrefs_ms.add(BILLING_CODE_TBL_NAME);
 		settablePrefs_ms.add(PROVIDER_TBL_NAME);
 		settablePrefs_ms.add(APPT_TBL_NAME);
-		settablePrefs_ms.add(BILLING_CODE_TBL_NAME);
+		settablePrefs_ms.add(BILLING_TBL_NAME);
 		settablePrefs_ms.add(QB_BILLING_TEMPLATE_FILE);
 		settablePrefs_ms.add(SERVICE_PRICE);
 		settablePrefs_ms.add(FIX_EXPIRY_ERRORS);

@@ -66,7 +66,7 @@ public class BabqDbBillings extends BabqDbBase {
 			if (strings.length == 12) { // File from old version of software
 				addRecord(sourceFile, lineNumber, strings[0],
 						stringYMDToDate(strings[1]), // DoExp
-						strings[2], strings[3], // firstName
+						strings[2], strings[3], // surname, firstName
 						stringYMDToDate(strings[4]), // DoB
 						strings[5], // sex
 						strings[7], // site
@@ -80,7 +80,7 @@ public class BabqDbBillings extends BabqDbBase {
 			} else {
 				addRecord(sourceFile, lineNumber, strings[0],
 						stringYMDToDate(strings[1]), // DoExp
-						strings[2], strings[3], // firstName
+						strings[2], strings[3], // surname, firstName
 						stringYMDToDate(strings[4]), // DoB
 						strings[5], // sex
 						strings[7], // site
@@ -149,13 +149,14 @@ public class BabqDbBillings extends BabqDbBase {
 				+ " ("
 				+ "HealthNumber VARCHAR(50) NOT NULL," //
 				+ "DateOfCardExpiry DATE ," //
-				+ "Surname VARCHAR(128) NOT NULL,"
-				+ "FirstName VARCHAR(128) NOT NULL,"
-				+ "DateOfBirth DATE NOT NULL,"//
+				+ "Surname VARCHAR(128) NOT NULL," //
+				+ "FirstName VARCHAR(128) NOT NULL," //
+				+ "DateOfBirth DATE NOT NULL,"// 5
 				+ "Sex VARCHAR(8) NOT NULL," //
 				+ "DateOfService DATE NOT NULL," //
-				+ "Site VARCHAR(8) NOT NULL," + "SourceFile VARCHAR(128),"// 
-				+ "SourceLineNumber INT4,"// 
+				+ "Site VARCHAR(8) NOT NULL," //
+				+ "SourceFile VARCHAR(128),"// 
+				+ "SourceLineNumber INT4,"// 10
 				+ "UsingParentHealthNum VARCHAR(8) NOT NULL," 
 				/**
 				 * @Since version 3.1. Address address to clinic output data
