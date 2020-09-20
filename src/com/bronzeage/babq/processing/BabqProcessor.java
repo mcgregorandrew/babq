@@ -376,7 +376,6 @@ public class BabqProcessor implements IBabqProcessor {
 				String province = rs.getString("patientTbl.Province");
 				String location = rs.getString("providerTbl.location");
 				String sourceFile = rs.getString("patientTbl.SourceFile");
-				String billingCode = null;  // Filled in later
 				int lineNumber = rs.getInt("patientTbl.SourceLineNumber");
 				java.sql.Date dateOfService = rs.getDate("apptTbl.ApptDate");
 				if (BabqRules.validateBasicFields(sourceFile, lineNumber,
@@ -429,8 +428,7 @@ public class BabqProcessor implements IBabqProcessor {
 									firstName, //
 									dateOfBirth, // 
 									sex, // 
-									location, dateOfService, usingParentHealthNum, province, mailingAddress, resAddress,
-									billingCode);
+									location, dateOfService, usingParentHealthNum, province, mailingAddress, resAddress, null);
 						count++;
 					}
 
@@ -580,7 +578,6 @@ public class BabqProcessor implements IBabqProcessor {
 										+rs.getString("ResCity")+", "+rs.getString("ResProvince")+", "
 										+rs.getString("ResCountry")+", "+rs.getString("ResPostal");
 				resAddress = resAddress.replace(",", " ");  //  Remove commas because they mess up CSV files
-				String billingCode = rs.getString("billingCodeTbl.BillingCode");
 
 				logger_m.warning("Added QC baby record for "
 						+ rs.getString("patientTbl.FirstName") + " "
@@ -595,7 +592,7 @@ public class BabqProcessor implements IBabqProcessor {
 						dateOfBirth, // 
 						sex, // 
 						location, dateOfService, true, province, mailingAddress, resAddress,
-						billingCode);
+						null);
 			}
 		} finally {
 			stmt.close();
