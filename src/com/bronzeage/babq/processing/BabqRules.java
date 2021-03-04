@@ -34,9 +34,20 @@ public class BabqRules {
 			BabqWarningList warningList, Integer patientNum) {
 
 		boolean recordOk = true;
+
+		// Check Date of Birth first to avoid null point and produce user
+		// friendly log.
+		if (dateOfBirth == null) {
+			warningList.addWarning(sourceFile, patientLineNumber,
+					"PatientNum: " + patientNum //
+							+ " Date of Birth cannot be null.");
+			return false;
+		}
+
 		// Skip non-Quebec records
-		if (!province.equals("QC"))
+		if (!province.equals("QC")) {
 			return true;
+		}
 
 		if (healthNumber == null) {
 			warningList.addWarning(sourceFile, patientLineNumber,
@@ -48,28 +59,20 @@ public class BabqRules {
 		// Check health number size
 		if (healthNumber.length() > 0) {
 			if (healthNumber.length() < 12) {
-				warningList
-						.addWarning(
-								sourceFile,
-								patientLineNumber,
-								"PatientNum: "
-										+ patientNum //
-										+ " Health number must have 12 character, found: "
-										+ healthNumber);
+				warningList.addWarning(sourceFile, patientLineNumber,
+						"PatientNum: " + patientNum //
+								+ " Health number must have 12 character, found: "
+								+ healthNumber);
 				return false;
 			}
 
 			// Check that the first 4 characters are all letters and the
 			// next 8 are all numbers
 			if (!healthNumPatter_m.matcher(healthNumber).matches()) {
-				warningList
-						.addWarning(
-								sourceFile,
-								patientLineNumber,
-								"PatientNum: "
-										+ patientNum //
-										+ " Health number must be 4 letters followed by 8 numbers."
-										+ "  Found : " + healthNumber);
+				warningList.addWarning(sourceFile, patientLineNumber,
+						"PatientNum: " + patientNum //
+								+ " Health number must be 4 letters followed by 8 numbers."
+								+ "  Found : " + healthNumber);
 				return false;
 			}
 		}
@@ -92,28 +95,20 @@ public class BabqRules {
 
 			// Check that date of service is less than date of expiry
 			if (dateOfService.getTime() > dateOfExpiry.getTime()) {
-				warningList
-						.addWarning(
-								sourceFile,
-								patientLineNumber,
-								"PatientNum: "
-										+ patientNum //
-										+ " Expiry date must be after the date of service.  dateOfExpiry is: "
-										+ dateOfExpiry + " dateOfService is: "
-										+ dateOfService);
+				warningList.addWarning(sourceFile, patientLineNumber,
+						"PatientNum: " + patientNum //
+								+ " Expiry date must be after the date of service.  dateOfExpiry is: "
+								+ dateOfExpiry + " dateOfService is: "
+								+ dateOfService);
 				recordOk = false;
 			}
 
 			// Check - is expiry date last day in the month
 			if (!BabqUtils.isLastDayOfMonth(expTimeLong)) {
-				warningList
-						.addWarning(
-								sourceFile,
-								patientLineNumber,
-								"PatientNum: "
-										+ patientNum //
-										+ " Expiry date must be the last day in the month.  It is: "
-										+ new Date(expTimeLong));
+				warningList.addWarning(sourceFile, patientLineNumber,
+						"PatientNum: " + patientNum //
+								+ " Expiry date must be the last day in the month.  It is: "
+								+ new Date(expTimeLong));
 				recordOk = false;
 			}
 		}
@@ -127,11 +122,11 @@ public class BabqRules {
 			Integer patientNum) {
 		try {
 			BabqValErrorType recordOk = BabqValErrorType.NO_ERROR;
-			
+
 			// Trim names in case they have leading spaces
 			surname = surname.trim();
 			firstName = firstName.trim();
-			
+
 			if (healthNumber.length() == 0)
 				return BabqValErrorType.OTHER_ERROR;
 
@@ -152,54 +147,44 @@ public class BabqRules {
 			namePart = namePart.toUpperCase();
 			if (!namePart.equals(healthNumber.substring(0, 4))) {
 				if (!okToUseParentHealthNum)
-					warningList
-							.addWarning(
-									sourceFile,
-									patientLineNumber,
-									"PatientNum: "
-											+ patientNum //
-											+ " Surname/firstname part of health card number is wrong.  Expected(from name): "
-											+ namePart + " but found(from health card): "
-											+ healthNumber.substring(0, 4));
+					warningList.addWarning(sourceFile, patientLineNumber,
+							"PatientNum: " + patientNum //
+									+ " Surname/firstname part of health card number is wrong.  Expected(from name): "
+									+ namePart
+									+ " but found(from health card): "
+									+ healthNumber.substring(0, 4));
 				recordOk = BabqValErrorType.NAME_ERROR;
 			}
-			
 
 			// Check - is birth date part of number right (incl sex)
 			Calendar calDateOfBirth = Calendar.getInstance();
 			calDateOfBirth.setTime(dateOfBirth);
 			int monthOfBirth = calDateOfBirth.get(Calendar.MONTH) + 1
 					+ (sex.equals("F") ? 50 : 0);
-			String dateCode = String.format("%02d%02d%02d", calDateOfBirth
-					.get(Calendar.YEAR) % 100, monthOfBirth, calDateOfBirth
-					.get(Calendar.DAY_OF_MONTH));
+			String dateCode = String.format("%02d%02d%02d",
+					calDateOfBirth.get(Calendar.YEAR) % 100, monthOfBirth,
+					calDateOfBirth.get(Calendar.DAY_OF_MONTH));
 			if (!dateCode.equals(healthNumber.substring(4, 10))) {
 				if (!okToUseParentHealthNum)
-					warningList
-							.addWarning(
-									sourceFile,
-									patientLineNumber,
-									"PatientNum: "
-											+ patientNum //
-											+ " Date/gender part of health card number is wrong.  Expected: "
-											+ dateCode + " but found: "
-											+ healthNumber.substring(4, 10));
+					warningList.addWarning(sourceFile, patientLineNumber,
+							"PatientNum: " + patientNum //
+									+ " Date/gender part of health card number is wrong.  Expected: "
+									+ dateCode + " but found: "
+									+ healthNumber.substring(4, 10));
 				recordOk = BabqValErrorType.DATE_ERROR;
 			}
 			return recordOk;
 		} catch (Throwable t) {
 			if (!okToUseParentHealthNum)
-				warningList
-						.addWarning(sourceFile, patientLineNumber,
-								"PatientNum: "
-										+ patientNum //
-										+ " Other error in health card number:"
-										+ healthNumber + " Error info: "
-										+ t.toString());
+				warningList.addWarning(sourceFile, patientLineNumber,
+						"PatientNum: " + patientNum //
+								+ " Other error in health card number:"
+								+ healthNumber + " Error info: "
+								+ t.toString());
 			return BabqValErrorType.OTHER_ERROR;
 		}
 	}
- 
+
 	public static boolean isAllowedToUseParentHealthNum(Date dateOfService,
 			Date dateOfBirth, String healthNumber) {
 		// Check - is it a baby (less than 1 year of age skips checks because it
@@ -209,21 +194,21 @@ public class BabqRules {
 		calDateOfBirthPlus1Years.add(Calendar.YEAR, 1);
 		if (calDateOfBirthPlus1Years.getTimeInMillis() > dateOfService
 				.getTime()) {
-			
+
 			// If the year of birth in the health card is the year
 			// of birth in the health card then we cannot use the
 			// parent's card - this must be the baby's card
 			// (possibly with errors).
 			if (healthNumber.length() < 6)
 				return false;
-			String birthYearString = healthNumber
-							.substring(4, 6);
+			String birthYearString = healthNumber.substring(4, 6);
 			if (birthYearString == null)
 				return false;
 			int birthYearInHealthCard = Integer.parseInt(birthYearString);
 			Calendar calDateOfBirth = GregorianCalendar.getInstance();
 			calDateOfBirth.setTime(dateOfBirth);
-			if ((calDateOfBirth.get(Calendar.YEAR) % 100) == birthYearInHealthCard)
+			if ((calDateOfBirth.get(Calendar.YEAR)
+					% 100) == birthYearInHealthCard)
 				return false;
 
 			return true;
@@ -236,21 +221,21 @@ public class BabqRules {
 		boolean returnValue = true;
 		// Check that every patient number referred to in an appt exists
 		Statement stmt = conn_m.createStatement();
-		ResultSet rs = stmt
-				.executeQuery("select apptTbl.ApptDate, apptTbl.PatientNum , patientTbl.PatientNum "
+		ResultSet rs = stmt.executeQuery(
+				"select apptTbl.ApptDate, apptTbl.PatientNum , patientTbl.PatientNum "
 						+ "from apptTbl left join patientTbl "
 						+ "on patientTbl.PatientNum = apptTbl.PatientNum "
 						+ "where patientTbl.PatientNum is null "
 						+ "and apptTbl.PatientNum != 0"
-						/**@Since 2015 Xmas Project*/
-						+ "and LOWER(apptTbl.Type) not like '%annual physical%' and LOWER(apptTbl.Type) not like '%phe%' and LOWER(apptTbl.Type) not like '%periodic health exam%'"); 
+						/** @Since 2015 Xmas Project */
+						+ "and LOWER(apptTbl.Type) not like '%annual physical%' and LOWER(apptTbl.Type) not like '%phe%' and LOWER(apptTbl.Type) not like '%periodic health exam%'");
 		while (rs.next()) {
 			returnValue = false;
-			warningList.addWarning("noFile", -1, "An appointment on "
-					+ rs.getDate("apptTbl.ApptDate") + " refers to patient "
-					+ rs.getInt("PatientNum")
-					+ " but no patient with this number " + "was found in the "
-					+ "list of patients");
+			warningList.addWarning("noFile", -1,
+					"An appointment on " + rs.getDate("apptTbl.ApptDate")
+							+ " refers to patient " + rs.getInt("PatientNum")
+							+ " but no patient with this number "
+							+ "was found in the " + "list of patients");
 		}
 		return returnValue;
 	}
@@ -261,29 +246,30 @@ public class BabqRules {
 
 		// Check that every patient number referred to in an appt exists
 		Statement stmt = conn_m.createStatement();
-		ResultSet rs = stmt
-				.executeQuery("select apptTbl.ApptDate, apptTbl.ProviderID, providerTbl.ProviderID "
+		ResultSet rs = stmt.executeQuery(
+				"select apptTbl.ApptDate, apptTbl.ProviderID, providerTbl.ProviderID "
 						+ "from apptTbl left join providerTbl "
 						+ "on providerTbl.ProviderID = apptTbl.ProviderID "
 						+ "where providerTbl.ProviderID is null "
 						+ "and apptTbl.PatientNum != 0"
-						/**@Since 2015 Xmas Project*/
+						/** @Since 2015 Xmas Project */
 						+ "and LOWER(apptTbl.Type) not like '%annual physical%' and LOWER(apptTbl.Type) not like '%phe%' and LOWER(apptTbl.Type) not like '%periodic health exam%'");
 		while (rs.next()) {
 			returnValue = false;
-			warningList.addWarning("", -1, "An appointment on "
-					+ rs.getDate("apptTbl.ApptDate") + " refers to provider "
-					+ rs.getInt("apptTbl.ProviderID")
-					+ " but no provider with this number "
-					+ "was found in the " + "list of providers");
+			warningList.addWarning("", -1,
+					"An appointment on " + rs.getDate("apptTbl.ApptDate")
+							+ " refers to provider "
+							+ rs.getInt("apptTbl.ProviderID")
+							+ " but no provider with this number "
+							+ "was found in the " + "list of providers");
 		}
 		rs.close();
 
 		if (!BabqConfig.ignoreFamilyMdErrors()) {
 			// Check that every MD number referred to in an patient record
 			// exists
-			rs = stmt
-					.executeQuery("select patientTbl.PatientNum, patientTbl.HealthNumber, "
+			rs = stmt.executeQuery(
+					"select patientTbl.PatientNum, patientTbl.HealthNumber, "
 							+ "patientTbl.FirstName, patientTbl.Surname, "
 							+ "patientTbl.FamilyDoctor "
 							+ "from patientTbl left join providerTbl "
@@ -293,23 +279,15 @@ public class BabqRules {
 			while (rs.next()) {
 
 				returnValue = false;
-				warningList
-						.addWarning(
-								"",
-								-1,
-								"The patient "
-										+ rs.getString("patientTbl.PatientNum")
-										+ "-"
-										+ rs.getString("FirstName")
-										+ " "
-										+ rs.getString("Surname")
-										+ "/"
-										+ rs
-												.getString("patientTbl.HealthNumber")
-										+ " has FamilyMD "
-										+ rs.getInt("patientTbl.FamilyDoctor")
-										+ " but no provider was found with this OHIP number in "
-										+ "the list of providers");
+				warningList.addWarning("", -1, "The patient "
+						+ rs.getString("patientTbl.PatientNum") + "-"
+						+ rs.getString("FirstName") + " "
+						+ rs.getString("Surname") + "/"
+						+ rs.getString("patientTbl.HealthNumber")
+						+ " has FamilyMD "
+						+ rs.getInt("patientTbl.FamilyDoctor")
+						+ " but no provider was found with this OHIP number in "
+						+ "the list of providers");
 			}
 			rs.close();
 		}
