@@ -6,6 +6,8 @@
 <JVMSearchPath>jdkpath</JVMSearchPath>
 <JVMSearchPath>exepath</JVMSearchPath>
 <JVMSearchPath>jview</JVMSearchPath>
+<arguments></arguments>
+<bundledJVMPath>..\..\..\environment\Java\jdk1.8.0_231</bundledJVMPath>
 <currentDirectory>${EXECUTABLEPATH}</currentDirectory>
 <embeddedJar>true</embeddedJar>
 <executableName>dist\bin\BABQ FMC Billing Tool.exe</executableName>

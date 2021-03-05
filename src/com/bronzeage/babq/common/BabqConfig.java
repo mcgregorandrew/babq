@@ -63,8 +63,8 @@ public class BabqConfig {
 	private static long supressExpTimeInMillis_m = new GregorianCalendar(2006,
 			11, 25).getTimeInMillis();
 
-	private static String versionCode_ms = "7.4";
-	private static String dateCode_ms = "Sept 20, 2020";
+	private static String versionCode_ms = "7.5";
+	private static String dateCode_ms = "Mar 04, 2021";
 
 	private static Set<String> settablePrefs_ms = null;
 
@@ -109,23 +109,23 @@ public class BabqConfig {
 
 	public static boolean fixExpiryDates() {
 		if (fixExpDates_m == null)
-			fixExpDates_m = Boolean.parseBoolean(prefs_m.get(FIX_EXPIRY_ERRORS,
-					"true"));
+			fixExpDates_m = Boolean
+					.parseBoolean(prefs_m.get(FIX_EXPIRY_ERRORS, "true"));
 
 		return fixExpDates_m;
 	}
 
 	public static boolean ignoreExpiryDates() {
 		if (ignoreExpiryDateErrors_m == null)
-			ignoreExpiryDateErrors_m = Boolean.parseBoolean(prefs_m.get(
-					IGNORE_EXPIRY_ERRORS, "false"));
+			ignoreExpiryDateErrors_m = Boolean
+					.parseBoolean(prefs_m.get(IGNORE_EXPIRY_ERRORS, "false"));
 		return ignoreExpiryDateErrors_m;
 	}
 
 	public static boolean ignoreFamilyMdErrors() {
 		if (ignoreFamilyMdErrors_m == null)
-			ignoreFamilyMdErrors_m = Boolean.parseBoolean(prefs_m.get(
-					IGNORE_FAMILYMD_ERRORS, "false"));
+			ignoreFamilyMdErrors_m = Boolean
+					.parseBoolean(prefs_m.get(IGNORE_FAMILYMD_ERRORS, "false"));
 		return ignoreFamilyMdErrors_m;
 	}
 
@@ -200,7 +200,8 @@ public class BabqConfig {
 			else if (name.equals(EXC_NAME_FILE_NAME))
 				result = getDefaultPath("updatedFiles", "nameExceptions.csv");
 			else if (name.equals(EXCLUDED_BILLING_CODE_FILE_NAME))
-				result = getDefaultPath("updatedFiles", "excludedBillingCodes.csv");
+				result = getDefaultPath("updatedFiles",
+						"excludedBillingCodes.csv");
 			else if (name.equals(FIX_EXPIRY_ERRORS))
 				result = "true";
 			else if (name.equals(IGNORE_EXPIRY_ERRORS))
@@ -232,8 +233,8 @@ public class BabqConfig {
 		// Set up output dir for this run
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
 		String dirName = fmt.format(new java.util.Date());
-		File outputDir = new File(BabqConfig
-				.getPref(BabqConfig.OUTPUT_DIR_ROOT));
+		File outputDir = new File(
+				BabqConfig.getPref(BabqConfig.OUTPUT_DIR_ROOT));
 		File outputNowDir = new File(outputDir, dirName);
 		if (!outputNowDir.exists())
 			outputNowDir.mkdirs();
